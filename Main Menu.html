@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>关务外贸案例菜单</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+    background:#f2f3f5;
+}
+
+body{
+    font-family:
+        "Microsoft YaHei",
+        "PingFang SC",
+        Arial,
+        sans-serif;
+    color:#151515;
+    background:#f2f3f5;
+    padding-top:82px;
+}
+
+/* =========================
+   顶部固定导航
+========================= */
+
+.top-nav{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:9999;
+
+    min-height:82px;
+    padding:12px 28px;
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    background:rgba(255,255,255,.94);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
+    border-bottom:1px solid #dcdcdc;
+    box-shadow:0 5px 25px rgba(0,0,0,.08);
+}
+
+.nav-title{
+    flex-shrink:0;
+    font-size:20px;
+    font-weight:900;
+    letter-spacing:1px;
+    margin-right:12px;
+}
+
+.nav-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    align-items:center;
+}
+
+.nav-item{
+    text-decoration:none;
+    color:#222;
+    background:#f0f1f3;
+    border:1px solid #ddd;
+
+    padding:8px 13px;
+    border-radius:8px;
+
+    font-size:13px;
+    font-weight:700;
+
+    transition:.18s ease;
+}
+
+.nav-item:hover{
+    background:#111;
+    color:#fff;
+    border-color:#111;
+    transform:translateY(-1px);
+}
+
+/* =========================
+   页面主体
+========================= */
+
+.page{
+    width:min(1900px,96vw);
+    margin:25px auto 70px;
+}
+
+.page-header{
+    margin-bottom:22px;
+}
+
+.page-header h1{
+    font-size:32px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.page-header p{
+    margin-top:7px;
+    color:#777;
+    font-size:14px;
+}
+
+/*
+   16:9宽屏优先：
+   两列布局。
+   每个大类一个独立DIV。
+*/
+.case-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+    align-items:start;
+}
+
+/* =========================
+   大类 DIV
+========================= */
+
+.category-card{
+    position:relative;
+
+    background:#fff;
+    border:1px solid #dedede;
+    border-radius:16px;
+
+    overflow:visible;
+
+    box-shadow:
+        0 8px 30px rgba(0,0,0,.055);
+
+    scroll-margin-top:105px;
+}
+
+.category-head{
+    position:sticky;
+    top:82px;
+    z-index:50;
+
+    padding:18px 22px;
+
+    background:#111;
+    color:#fff;
+
+    border-radius:16px 16px 0 0;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    box-shadow:0 4px 14px rgba(0,0,0,.13);
+}
+
+.category-head-left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.category-number{
+    font-size:13px;
+    font-weight:900;
+    padding:6px 9px;
+    border:1px solid rgba(255,255,255,.35);
+    border-radius:6px;
+}
+
+.category-title{
+    font-size:21px;
+    font-weight:900;
+}
+
+.category-count{
+    font-size:12px;
+    opacity:.65;
+}
+
+/* =========================
+   案例列表
+========================= */
+
+.case-list{
+    padding:10px 14px 18px;
+}
+
+.case-row{
+    position:relative;
+
+    display:flex;
+    align-items:center;
+
+    min-height:37px;
+    padding:7px 10px;
+
+    border-bottom:1px solid #eeeeee;
+
+    cursor:pointer;
+
+    transition:
+        background .12s ease,
+        padding-left .12s ease;
+}
+
+.case-row:last-child{
+    border-bottom:none;
+}
+
+.case-row:hover{
+    background:#f1f1f1;
+    padding-left:15px;
+}
+
+.case-code{
+    flex:0 0 66px;
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+
+    font-size:11px;
+    color:#999;
+}
+
+.case-text{
+    font-size:16px;
+    font-weight:600;
+    line-height:1.45;
+}
+
+.case-row:hover .case-text{
+    font-weight:800;
+}
+
+/* =========================
+   鼠标跟随黑色提示框
+========================= */
+
+#hover-preview{
+    position:fixed;
+
+    z-index:100000;
+
+    display:none;
+
+    max-width:520px;
+
+    padding:12px 16px;
+
+    background:#000;
+    color:#fff;
+
+    border:1px solid #333;
+    border-radius:8px;
+
+    font-size:14px;
+    line-height:1.55;
+    font-weight:700;
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.3);
+
+    pointer-events:none;
+
+    white-space:normal;
+
+    transform:translate(15px,15px);
+}
+
+/* =========================
+   点击反馈
+========================= */
+
+.copy-toast{
+    position:fixed;
+
+    left:50%;
+    bottom:30px;
+
+    z-index:100001;
+
+    transform:translateX(-50%) translateY(20px);
+
+    padding:12px 20px;
+
+    background:#111;
+    color:#fff;
+
+    border-radius:9px;
+
+    font-size:14px;
+    font-weight:700;
+
+    opacity:0;
+    pointer-events:none;
+
+    transition:.25s ease;
+
+    box-shadow:0 8px 30px rgba(0,0,0,.25);
+}
+
+.copy-toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+/* =========================
+   响应式
+========================= */
+
+@media(max-width:1100px){
+
+    .top-nav{
+        min-height:auto;
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    body{
+        padding-top:125px;
+    }
+
+    .category-head{
+        top:125px;
+    }
+
+    .case-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .page{
+        width:94vw;
+    }
+
+    .nav-title{
+        font-size:17px;
+    }
+
+    .nav-item{
+        font-size:11px;
+        padding:6px 9px;
+    }
+
+    .category-title{
+        font-size:18px;
+    }
+
+    .case-code{
+        flex-basis:60px;
+    }
+
+    .case-text{
+        font-size:12px;
+    }
+
+    #hover-preview{
+        max-width:280px;
+        font-size:12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     顶部导航
+========================= -->
+
+<nav class="top-nav">
+
+    <div class="nav-title">关务 · 外贸案例库</div>
+
+    <div class="nav-list">
+
+        <a class="nav-item" href="#cat01">01 进出口报关</a>
+        <a class="nav-item" href="#cat02">02 商品归类</a>
+        <a class="nav-item" href="#cat03">03 关税税费</a>
+        <a class="nav-item" href="#cat04">04 原产地</a>
+        <a class="nav-item" href="#cat05">05 海关查验</a>
+        <a class="nav-item" href="#cat06">06 外贸业务</a>
+        <a class="nav-item" href="#cat07">07 突发事故</a>
+        <a class="nav-item" href="#cat08">08 现实职场</a>
+        <a class="nav-item" href="#cat09">09 灰色地带</a>
+        <a class="nav-item" href="#cat10">10 综合实战</a>
+
+    </div>
+
+</nav>
+
+
+<div class="page">
+
+    <div class="page-header">
+        <h1>关务外贸案例菜单</h1>
+        <p>
+            点击任意案例即可自动复制「大类 + 小类」；
+            鼠标悬停可实时查看完整案例名称。
+        </p>
+    </div>
+
+    <div class="case-grid">
+
+
+<!-- =========================================================
+     01 进出口报关
+========================================================= -->
+
+<div class="category-card" id="cat01">
+
+    <div class="category-head">
+        <div class="category-head-left">
+            <span class="category-number">01</span>
+            <span class="category-title">进出口报关</span>
+        </div>
+        <span class="category-count">30 个案例</span>
+    </div>
+
+    <div class="case-list">
+
+        <div class="case-row" data-text="一般贸易出口报关">
+            <span class="case-code">01-01</span><span class="case-text">一般贸易出口报关</span>
+        </div>
+
+        <div class="case-row" data-text="一般贸易进口报关">
+            <span class="case-code">01-02</span><span class="case-text">一般贸易进口报关</span>
+        </div>
+
+        <div class="case-row" data-text="出口报关单填制">
+            <span class="case-code">01-03</span><span class="case-text">出口报关单填制</span>
+        </div>
+
+        <div class="case-row" data-text="进口报关单填制">
+            <span class="case-code">01-04</span><span class="case-text">进口报关单填制</span>
+        </div>
+
+        <div class="case-row" data-text="商业发票审核">
+            <span class="case-code">01-05</span><span class="case-text">商业发票审核</span>
+        </div>
+
+        <div class="case-row" data-text="装箱单审核">
+            <span class="case-code">01-06</span><span class="case-text">装箱单审核</span>
+        </div>
+
+        <div class="case-row" data-text="合同与单证审核">
+            <span class="case-code">01-07</span><span class="case-text">合同与单证审核</span>
+        </div>
+
+        <div class="case-row" data-text="申报要素判断">
+            <span class="case-code">01-08</span><span class="case-text">申报要素判断</span>
+        </div>
+
+        <div class="case-row" data-text="报关资料不完整">
+            <span class="case-code">01-09</span><span class="case-text">报关资料不完整</span>
+        </div>
+
+        <div class="case-row" data-text="单证信息不一致">
+            <span class="case-code">01-10</span><span class="case-text">单证信息不一致</span>
+        </div>
+
+        <div class="case-row" data-text="报关单退单">
+            <span class="case-code">01-11</span><span class="case-text">报关单退单</span>
+        </div>
+
+        <div class="case-row" data-text="报关单改单">
+            <span class="case-code">01-12</span><span class="case-text">报关单改单</span>
+        </div>
+
+        <div class="case-row" data-text="撤单重新申报">
+            <span class="case-code">01-13</span><span class="case-text">撤单重新申报</span>
+        </div>
+
+        <div class="case-row" data-text="报关时间与截关冲突">
+            <span class="case-code">01-14</span><span class="case-text">报关时间与截关冲突</span>
+        </div>
+
+        <div class="case-row" data-text="海关查验前处理">
+            <span class="case-code">01-15</span><span class="case-text">海关查验前处理</span>
+        </div>
+
+        <div class="case-row" data-text="海关查验后处理">
+            <span class="case-code">01-16</span><span class="case-text">海关查验后处理</span>
+        </div>
+
+        <div class="case-row" data-text="货物与申报不符">
+            <span class="case-code">01-17</span><span class="case-text">货物与申报不符</span>
+        </div>
+
+        <div class="case-row" data-text="申报价格异常">
+            <span class="case-code">01-18</span><span class="case-text">申报价格异常</span>
+        </div>
+
+        <div class="case-row" data-text="申报品名错误">
+            <span class="case-code">01-19</span><span class="case-text">申报品名错误</span>
+        </div>
+
+        <div class="case-row" data-text="申报数量错误">
+            <span class="case-code">01-20</span><span class="case-text">申报数量错误</span>
+        </div>
+
+        <div class="case-row" data-text="申报重量错误">
+            <span class="case-code">01-21</span><span class="case-text">申报重量错误</span>
+        </div>
+
+        <div class="case-row" data-text="报关与货代协调">
+            <span class="case-code">01-22</span><span class="case-text">报关与货代协调</span>
+        </div>
+
+        <div class="case-row" data-text="报关与业务员协调">
+            <span class="case-code">01-23</span><span class="case-text">报关与业务员协调</span>
+        </div>
+
+        <div class="case-row" data-text="报关与仓库协调">
+            <span class="case-code">01-24</span><span class="case-text">报关与仓库协调</span>
+        </div>
+
+        <div class="case-row" data-text="报关异常综合处理">
+            <span class="case-code">01-25</span><span class="case-text">报关异常综合处理</span>
+        </div>
+
+        <div class="case-row" data-text="出口报关完整案例">
+            <span class="case-code">01-26</span><span class="case-text">出口报关完整案例</span>
+        </div>
+
+        <div class="case-row" data-text="进口清关完整案例">
+            <span class="case-code">01-27</span><span class="case-text">进口清关完整案例</span>
+        </div>
+
+        <div class="case-row" data-text="历史报关错误处理">
+            <span class="case-code">01-28</span><span class="case-text">历史报关错误处理</span>
+        </div>
+
+        <div class="case-row" data-text="海关要求企业说明">
+            <span class="case-code">01-29</span><span class="case-text">海关要求企业说明</span>
+        </div>
+
+        <div class="case-row" data-text="高压报关实战">
+            <span class="case-code">01-30</span><span class="case-text">高压报关实战</span>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- =========================================================
+     02 商品归类
+========================================================= -->
+
+<div class="category-card" id="cat02">
+
+    <div class="category-head">
+        <div class="category-head-left">
+            <span class="category-number">02</span>
+            <span class="category-title">商品归类</span>
+        </div>
+        <span class="category-count">75 个案例</span>
+    </div>
+
+    <div class="case-list">
+
+        <div class="case-row" data-text="基础HS编码查询"><span class="case-code">02-01</span><span class="case-text">基础HS编码查询</span></div>
+        <div class="case-row" data-text="商品名称判断归类"><span class="case-code">02-02</span><span class="case-text">商品名称判断归类</span></div>
+        <div class="case-row" data-text="商品材质归类"><span class="case-code">02-03</span><span class="case-text">商品材质归类</span></div>
+        <div class="case-row" data-text="商品用途归类"><span class="case-code">02-04</span><span class="case-text">商品用途归类</span></div>
+        <div class="case-row" data-text="商品功能归类"><span class="case-code">02-05</span><span class="case-text">商品功能归类</span></div>
+        <div class="case-row" data-text="商品结构归类"><span class="case-code">02-06</span><span class="case-text">商品结构归类</span></div>
+        <div class="case-row" data-text="商品工作原理归类"><span class="case-code">02-07</span><span class="case-text">商品工作原理归类</span></div>
+        <div class="case-row" data-text="商品成分归类"><span class="case-code">02-08</span><span class="case-text">商品成分归类</span></div>
+        <div class="case-row" data-text="商品规格参数归类"><span class="case-code">02-09</span><span class="case-text">商品规格参数归类</span></div>
+        <div class="case-row" data-text="商品型号影响归类"><span class="case-code">02-10</span><span class="case-text">商品型号影响归类</span></div>
+        <div class="case-row" data-text="品牌对归类的影响"><span class="case-code">02-11</span><span class="case-text">品牌对归类的影响</span></div>
+        <div class="case-row" data-text="新产品首次归类"><span class="case-code">02-12</span><span class="case-text">新产品首次归类</span></div>
+        <div class="case-row" data-text="同类不同型号产品归类"><span class="case-code">02-13</span><span class="case-text">同类不同型号产品归类</span></div>
+        <div class="case-row" data-text="同一产品多种用途归类"><span class="case-code">02-14</span><span class="case-text">同一产品多种用途归类</span></div>
+        <div class="case-row" data-text="多功能产品归类"><span class="case-code">02-15</span><span class="case-text">多功能产品归类</span></div>
+        <div class="case-row" data-text="组合商品归类"><span class="case-code">02-16</span><span class="case-text">组合商品归类</span></div>
+        <div class="case-row" data-text="成套设备归类"><span class="case-code">02-17</span><span class="case-text">成套设备归类</span></div>
+        <div class="case-row" data-text="零部件归类"><span class="case-code">02-18</span><span class="case-text">零部件归类</span></div>
+        <div class="case-row" data-text="配件与整机归类"><span class="case-code">02-19</span><span class="case-text">配件与整机归类</span></div>
+        <div class="case-row" data-text="独立功能部件归类"><span class="case-code">02-20</span><span class="case-text">独立功能部件归类</span></div>
+        <div class="case-row" data-text="未组装商品归类"><span class="case-code">02-21</span><span class="case-text">未组装商品归类</span></div>
+        <div class="case-row" data-text="半成品归类"><span class="case-code">02-22</span><span class="case-text">半成品归类</span></div>
+        <div class="case-row" data-text="混合材料商品归类"><span class="case-code">02-23</span><span class="case-text">混合材料商品归类</span></div>
+        <div class="case-row" data-text="塑料制品归类"><span class="case-code">02-24</span><span class="case-text">塑料制品归类</span></div>
+        <div class="case-row" data-text="金属制品归类"><span class="case-code">02-25</span><span class="case-text">金属制品归类</span></div>
+        <div class="case-row" data-text="电子产品归类"><span class="case-code">02-26</span><span class="case-text">电子产品归类</span></div>
+        <div class="case-row" data-text="电器产品归类"><span class="case-code">02-27</span><span class="case-text">电器产品归类</span></div>
+        <div class="case-row" data-text="机械设备归类"><span class="case-code">02-28</span><span class="case-text">机械设备归类</span></div>
+        <div class="case-row" data-text="汽车零部件归类"><span class="case-code">02-29</span><span class="case-text">汽车零部件归类</span></div>
+        <div class="case-row" data-text="家具产品归类"><span class="case-code">02-30</span><span class="case-text">家具产品归类</span></div>
+        <div class="case-row" data-text="纺织品归类"><span class="case-code">02-31</span><span class="case-text">纺织品归类</span></div>
+        <div class="case-row" data-text="鞋类归类"><span class="case-code">02-32</span><span class="case-text">鞋类归类</span></div>
+        <div class="case-row" data-text="化工产品归类"><span class="case-code">02-33</span><span class="case-text">化工产品归类</span></div>
+        <div class="case-row" data-text="食品归类"><span class="case-code">02-34</span><span class="case-text">食品归类</span></div>
+        <div class="case-row" data-text="医疗器械归类"><span class="case-code">02-35</span><span class="case-text">医疗器械归类</span></div>
+        <div class="case-row" data-text="玩具归类"><span class="case-code">02-36</span><span class="case-text">玩具归类</span></div>
+        <div class="case-row" data-text="体育用品归类"><span class="case-code">02-37</span><span class="case-text">体育用品归类</span></div>
+        <div class="case-row" data-text="包装物归类"><span class="case-code">02-38</span><span class="case-text">包装物归类</span></div>
+        <div class="case-row" data-text="样品归类"><span class="case-code">02-39</span><span class="case-text">样品归类</span></div>
+        <div class="case-row" data-text="礼品归类"><span class="case-code">02-40</span><span class="case-text">礼品归类</span></div>
+        <div class="case-row" data-text="软件与电子载体归类"><span class="case-code">02-41</span><span class="case-text">软件与电子载体归类</span></div>
+        <div class="case-row" data-text="商品与附件组合归类"><span class="case-code">02-42</span><span class="case-text">商品与附件组合归类</span></div>
+        <div class="case-row" data-text="商品与包装组合归类"><span class="case-code">02-43</span><span class="case-text">商品与包装组合归类</span></div>
+        <div class="case-row" data-text="进口零件归类"><span class="case-code">02-44</span><span class="case-text">进口零件归类</span></div>
+        <div class="case-row" data-text="出口商品归类"><span class="case-code">02-45</span><span class="case-text">出口商品归类</span></div>
+        <div class="case-row" data-text="进口商品归类"><span class="case-code">02-46</span><span class="case-text">进口商品归类</span></div>
+        <div class="case-row" data-text="暂时进出口商品归类"><span class="case-code">02-47</span><span class="case-text">暂时进出口商品归类</span></div>
+        <div class="case-row" data-text="加工贸易商品归类"><span class="case-code">02-48</span><span class="case-text">加工贸易商品归类</span></div>
+        <div class="case-row" data-text="跨境电商商品归类"><span class="case-code">02-49</span><span class="case-text">跨境电商商品归类</span></div>
+        <div class="case-row" data-text="同类商品不同HS编码比较"><span class="case-code">02-50</span><span class="case-text">同类商品不同HS编码比较</span></div>
+        <div class="case-row" data-text="两个HS编码之间的选择"><span class="case-code">02-51</span><span class="case-text">两个HS编码之间的选择</span></div>
+        <div class="case-row" data-text="企业历史归类错误"><span class="case-code">02-52</span><span class="case-text">企业历史归类错误</span></div>
+        <div class="case-row" data-text="海关质疑HS编码"><span class="case-code">02-53</span><span class="case-text">海关质疑HS编码</span></div>
+        <div class="case-row" data-text="海关要求提供归类依据"><span class="case-code">02-54</span><span class="case-text">海关要求提供归类依据</span></div>
+        <div class="case-row" data-text="归类争议处理"><span class="case-code">02-55</span><span class="case-text">归类争议处理</span></div>
+        <div class="case-row" data-text="归类预裁定案例"><span class="case-code">02-56</span><span class="case-text">归类预裁定案例</span></div>
+        <div class="case-row" data-text="归类依据资料准备"><span class="case-code">02-57</span><span class="case-text">归类依据资料准备</span></div>
+        <div class="case-row" data-text="申报要素与HS编码匹配"><span class="case-code">02-58</span><span class="case-text">申报要素与HS编码匹配</span></div>
+        <div class="case-row" data-text="HS编码与税率联动判断"><span class="case-code">02-59</span><span class="case-text">HS编码与税率联动判断</span></div>
+        <div class="case-row" data-text="HS编码与监管条件判断"><span class="case-code">02-60</span><span class="case-text">HS编码与监管条件判断</span></div>
+        <div class="case-row" data-text="HS编码与许可证要求"><span class="case-code">02-61</span><span class="case-text">HS编码与许可证要求</span></div>
+        <div class="case-row" data-text="HS编码与检验检疫要求"><span class="case-code">02-62</span><span class="case-text">HS编码与检验检疫要求</span></div>
+        <div class="case-row" data-text="HS编码与出口退税联动"><span class="case-code">02-63</span><span class="case-text">HS编码与出口退税联动</span></div>
+        <div class="case-row" data-text="HS编码与原产地规则联动"><span class="case-code">02-64</span><span class="case-text">HS编码与原产地规则联动</span></div>
+        <div class="case-row" data-text="客户指定HS编码"><span class="case-code">02-65</span><span class="case-text">客户指定HS编码</span></div>
+        <div class="case-row" data-text="供应商提供错误HS编码"><span class="case-code">02-66</span><span class="case-text">供应商提供错误HS编码</span></div>
+        <div class="case-row" data-text="货代提供错误HS编码"><span class="case-code">02-67</span><span class="case-text">货代提供错误HS编码</span></div>
+        <div class="case-row" data-text="业务员要求按旧编码申报"><span class="case-code">02-68</span><span class="case-text">业务员要求按旧编码申报</span></div>
+        <div class="case-row" data-text="同行都这么报的归类陷阱"><span class="case-code">02-69</span><span class="case-text">“同行都这么报”的归类陷阱</span></div>
+        <div class="case-row" data-text="之前一直这么报的历史编码"><span class="case-code">02-70</span><span class="case-text">“之前一直这么报”的历史编码</span></div>
+        <div class="case-row" data-text="低税率HS编码诱惑"><span class="case-code">02-71</span><span class="case-text">低税率HS编码诱惑</span></div>
+        <div class="case-row" data-text="边界商品归类"><span class="case-code">02-72</span><span class="case-text">边界商品归类</span></div>
+        <div class="case-row" data-text="模糊商品名称归类"><span class="case-code">02-73</span><span class="case-text">模糊商品名称归类</span></div>
+        <div class="case-row" data-text="多个章节均可能适用的商品"><span class="case-code">02-74</span><span class="case-text">多个章节均可能适用的商品</span></div>
+        <div class="case-row" data-text="复杂综合归类实战"><span class="case-code">02-75</span><span class="case-text">复杂综合归类实战</span></div>
+
+    </div>
+</div>
+
+
+<!-- =========================================================
+     03 关税税费
+========================================================= -->
+
+<div class="category-card" id="cat03">
+
+    <div class="category-head">
+        <div class="category-head-left">
+            <span class="category-number">03</span>
+            <span class="category-title">关税税费</span>
+        </div>
+        <span class="category-count">75 个案例</span>
+    </div>
+
+    <div class="case-list">
+
+        <div class="case-row" data-text="基础进口关税计算"><span class="case-code">03-01</span><span class="case-text">基础进口关税计算</span></div>
+        <div class="case-row" data-text="基础进口增值税计算"><span class="case-code">03-02</span><span class="case-text">基础进口增值税计算</span></div>
+        <div class="case-row" data-text="关税+增值税综合计算"><span class="case-code">03-03</span><span class="case-text">关税+增值税综合计算</span></div>
+        <div class="case-row" data-text="进口税费完整核算"><span class="case-code">03-04</span><span class="case-text">进口税费完整核算</span></div>
+        <div class="case-row" data-text="完税价格基础判断"><span class="case-code">03-05</span><span class="case-text">完税价格基础判断</span></div>
+        <div class="case-row" data-text="成交价格作为完税价格"><span class="case-code">03-06</span><span class="case-text">成交价格作为完税价格</span></div>
+        <div class="case-row" data-text="成交价格无法确定"><span class="case-code">03-07</span><span class="case-text">成交价格无法确定</span></div>
+        <div class="case-row" data-text="成交价格调整"><span class="case-code">03-08</span><span class="case-text">成交价格调整</span></div>
+        <div class="case-row" data-text="FOB价格与完税价格"><span class="case-code">03-09</span><span class="case-text">FOB价格与完税价格</span></div>
+        <div class="case-row" data-text="CIF价格与完税价格"><span class="case-code">03-10</span><span class="case-text">CIF价格与完税价格</span></div>
+        <div class="case-row" data-text="CFR价格与完税价格"><span class="case-code">03-11</span><span class="case-text">CFR价格与完税价格</span></div>
+        <div class="case-row" data-text="运费计入完税价格"><span class="case-code">03-12</span><span class="case-text">运费计入完税价格</span></div>
+        <div class="case-row" data-text="保险费计入完税价格"><span class="case-code">03-13</span><span class="case-text">保险费计入完税价格</span></div>
+        <div class="case-row" data-text="运费无法确定"><span class="case-code">03-14</span><span class="case-text">运费无法确定</span></div>
+        <div class="case-row" data-text="保险费无法确定"><span class="case-code">03-15</span><span class="case-text">保险费无法确定</span></div>
+        <div class="case-row" data-text="佣金是否计入完税价格"><span class="case-code">03-16</span><span class="case-text">佣金是否计入完税价格</span></div>
+        <div class="case-row" data-text="特许权使用费是否计入"><span class="case-code">03-17</span><span class="case-text">特许权使用费是否计入</span></div>
+        <div class="case-row" data-text="协助费用是否计入"><span class="case-code">03-18</span><span class="case-text">协助费用是否计入</span></div>
+        <div class="case-row" data-text="包装费用是否计入"><span class="case-code">03-19</span><span class="case-text">包装费用是否计入</span></div>
+        <div class="case-row" data-text="模具费用是否计入"><span class="case-code">03-20</span><span class="case-text">模具费用是否计入</span></div>
+        <div class="case-row" data-text="样品进口税费"><span class="case-code">03-21</span><span class="case-text">样品进口税费</span></div>
+        <div class="case-row" data-text="免费进口货物税费"><span class="case-code">03-22</span><span class="case-text">免费进口货物税费</span></div>
+        <div class="case-row" data-text="赠品进口税费"><span class="case-code">03-23</span><span class="case-text">赠品进口税费</span></div>
+        <div class="case-row" data-text="关联企业交易价格"><span class="case-code">03-24</span><span class="case-text">关联企业交易价格</span></div>
+        <div class="case-row" data-text="海关质疑成交价格"><span class="case-code">03-25</span><span class="case-text">海关质疑成交价格</span></div>
+        <div class="case-row" data-text="价格明显偏低"><span class="case-code">03-26</span><span class="case-text">价格明显偏低</span></div>
+        <div class="case-row" data-text="价格明显偏高"><span class="case-code">03-27</span><span class="case-text">价格明显偏高</span></div>
+        <div class="case-row" data-text="同类货物价格比较"><span class="case-code">03-28</span><span class="case-text">同类货物价格比较</span></div>
+        <div class="case-row" data-text="相同货物价格比较"><span class="case-code">03-29</span><span class="case-text">相同货物价格比较</span></div>
+        <div class="case-row" data-text="海关估价方法判断"><span class="case-code">03-30</span><span class="case-text">海关估价方法判断</span></div>
+        <div class="case-row" data-text="相同货物估价"><span class="case-code">03-31</span><span class="case-text">相同货物估价</span></div>
+        <div class="case-row" data-text="类似货物估价"><span class="case-code">03-32</span><span class="case-text">类似货物估价</span></div>
+        <div class="case-row" data-text="倒扣价格估价"><span class="case-code">03-33</span><span class="case-text">倒扣价格估价</span></div>
+        <div class="case-row" data-text="计算价格估价"><span class="case-code">03-34</span><span class="case-text">计算价格估价</span></div>
+        <div class="case-row" data-text="合理方法估价"><span class="case-code">03-35</span><span class="case-text">合理方法估价</span></div>
+        <div class="case-row" data-text="暂定价格进口"><span class="case-code">03-36</span><span class="case-text">暂定价格进口</span></div>
+        <div class="case-row" data-text="暂定税率适用"><span class="case-code">03-37</span><span class="case-text">暂定税率适用</span></div>
+        <div class="case-row" data-text="最惠国税率判断"><span class="case-code">03-38</span><span class="case-text">最惠国税率判断</span></div>
+        <div class="case-row" data-text="普通税率判断"><span class="case-code">03-39</span><span class="case-text">普通税率判断</span></div>
+        <div class="case-row" data-text="协定税率判断"><span class="case-code">03-40</span><span class="case-text">协定税率判断</span></div>
+        <div class="case-row" data-text="特惠税率判断"><span class="case-code">03-41</span><span class="case-text">特惠税率判断</span></div>
+        <div class="case-row" data-text="RCEP税率判断"><span class="case-code">03-42</span><span class="case-text">RCEP税率判断</span></div>
+        <div class="case-row" data-text="关税配额税率"><span class="case-code">03-43</span><span class="case-text">关税配额税率</span></div>
+        <div class="case-row" data-text="进口商品税率查询"><span class="case-code">03-44</span><span class="case-text">进口商品税率查询</span></div>
+        <div class="case-row" data-text="反倾销税"><span class="case-code">03-45</span><span class="case-text">反倾销税</span></div>
+        <div class="case-row" data-text="反补贴税"><span class="case-code">03-46</span><span class="case-text">反补贴税</span></div>
+        <div class="case-row" data-text="保障措施关税"><span class="case-code">03-47</span><span class="case-text">保障措施关税</span></div>
+        <div class="case-row" data-text="复合税率计算"><span class="case-code">03-48</span><span class="case-text">复合税率计算</span></div>
+        <div class="case-row" data-text="从价税计算"><span class="case-code">03-49</span><span class="case-text">从价税计算</span></div>
+        <div class="case-row" data-text="从量税计算"><span class="case-code">03-50</span><span class="case-text">从量税计算</span></div>
+        <div class="case-row" data-text="消费税计算"><span class="case-code">03-51</span><span class="case-text">消费税计算</span></div>
+        <div class="case-row" data-text="关税+消费税+增值税"><span class="case-code">03-52</span><span class="case-text">关税+消费税+增值税</span></div>
+        <div class="case-row" data-text="多税种综合核算"><span class="case-code">03-53</span><span class="case-text">多税种综合核算</span></div>
+        <div class="case-row" data-text="汇率对税费的影响"><span class="case-code">03-54</span><span class="case-text">汇率对税费的影响</span></div>
+        <div class="case-row" data-text="外币价格换算完税价格"><span class="case-code">03-55</span><span class="case-text">外币价格换算完税价格</span></div>
+        <div class="case-row" data-text="税费金额四舍五入"><span class="case-code">03-56</span><span class="case-text">税费金额四舍五入</span></div>
+        <div class="case-row" data-text="补税案例"><span class="case-code">03-57</span><span class="case-text">补税案例</span></div>
+        <div class="case-row" data-text="追征税款案例"><span class="case-code">03-58</span><span class="case-text">追征税款案例</span></div>
+        <div class="case-row" data-text="退税案例"><span class="case-code">03-59</span><span class="case-text">退税案例</span></div>
+        <div class="case-row" data-text="多缴税款处理"><span class="case-code">03-60</span><span class="case-text">多缴税款处理</span></div>
+        <div class="case-row" data-text="少缴税款处理"><span class="case-code">03-61</span><span class="case-text">少缴税款处理</span></div>
+        <div class="case-row" data-text="税费核算错误纠正"><span class="case-code">03-62</span><span class="case-text">税费核算错误纠正</span></div>
+        <div class="case-row" data-text="历史申报税费错误"><span class="case-code">03-63</span><span class="case-text">历史申报税费错误</span></div>
+        <div class="case-row" data-text="海关质疑税费计算"><span class="case-code">03-64</span><span class="case-text">海关质疑税费计算</span></div>
+        <div class="case-row" data-text="企业与海关税费争议"><span class="case-code">03-65</span><span class="case-text">企业与海关税费争议</span></div>
+        <div class="case-row" data-text="进口成本倒推"><span class="case-code">03-66</span><span class="case-text">进口成本倒推</span></div>
+        <div class="case-row" data-text="税费对采购成本的影响"><span class="case-code">03-67</span><span class="case-text">税费对采购成本的影响</span></div>
+        <div class="case-row" data-text="不同HS编码税费比较"><span class="case-code">03-68</span><span class="case-text">不同HS编码税费比较</span></div>
+        <div class="case-row" data-text="不同贸易方式税费比较"><span class="case-code">03-69</span><span class="case-text">不同贸易方式税费比较</span></div>
+        <div class="case-row" data-text="不同原产地税率比较"><span class="case-code">03-70</span><span class="case-text">不同原产地税率比较</span></div>
+        <div class="case-row" data-text="进口报价中的税费核算"><span class="case-code">03-71</span><span class="case-text">进口报价中的税费核算</span></div>
+        <div class="case-row" data-text="CIF报价反推进口成本"><span class="case-code">03-72</span><span class="case-text">CIF报价反推进口成本</span></div>
+        <div class="case-row" data-text="客户要求估算进口税"><span class="case-code">03-73</span><span class="case-text">客户要求估算进口税</span></div>
+        <div class="case-row" data-text="低报价格的税费风险"><span class="case-code">03-74</span><span class="case-text">低报价格的税费风险</span></div>
+        <div class="case-row" data-text="综合进口税费实战"><span class="case-code">03-75</span><span class="case-text">综合进口税费实战</span></div>
+
+    </div>
+</div>
+
+
+<!-- =========================================================
+     04 原产地
+========================================================= -->
+
+<div class="category-card" id="cat04">
+
+    <div class="category-head">
+        <div class="category-head-left">
+            <span class="category-number">04</span>
+            <span class="category-title">原产地</span>
+        </div>
+        <span class="category-count">70 个案例</span>
+    </div>
+
+    <div class="case-list">
+
+        <div class="case-row" data-text="中国原产地基础判断"><span class="case-code">04-01</span><span class="case-text">中国原产地基础判断</span></div>
+        <div class="case-row" data-text="单一国家生产的原产地"><span class="case-code">04-02</span><span class="case-text">单一国家生产的原产地</span></div>
+        <div class="case-row" data-text="多国生产的原产地判断"><span class="case-code">04-03</span><span class="case-text">多国生产的原产地判断</span></div>
+        <div class="case-row" data-text="进口原材料影响原产地"><span class="case-code">04-04</span><span class="case-text">进口原材料影响原产地</span></div>
+        <div class="case-row" data-text="进口零部件影响原产地"><span class="case-code">04-05</span><span class="case-text">进口零部件影响原产地</span></div>
+        <div class="case-row" data-text="进口半成品再加工"><span class="case-code">04-06</span><span class="case-text">进口半成品再加工</span></div>
+        <div class="case-row" data-text="简单加工是否改变原产地"><span class="case-code">04-07</span><span class="case-text">简单加工是否改变原产地</span></div>
+        <div class="case-row" data-text="实质性改变原产地"><span class="case-code">04-08</span><span class="case-text">实质性改变原产地</span></div>
+        <div class="case-row" data-text="加工工序判断原产地"><span class="case-code">04-09</span><span class="case-text">加工工序判断原产地</span></div>
+        <div class="case-row" data-text="生产工序不足以改变原产地"><span class="case-code">04-10</span><span class="case-text">生产工序不足以改变原产地</span></div>
+        <div class="case-row" data-text="产品税则号改变判断"><span class="case-code">04-11</span><span class="case-text">产品税则号改变判断</span></div>
+        <div class="case-row" data-text="税则归类改变与原产地"><span class="case-code">04-12</span><span class="case-text">税则归类改变与原产地</span></div>
+        <div class="case-row" data-text="区域价值成分计算"><span class="case-code">04-13</span><span class="case-text">区域价值成分计算</span></div>
+        <div class="case-row" data-text="非原产材料价值计算"><span class="case-code">04-14</span><span class="case-text">非原产材料价值计算</span></div>
+        <div class="case-row" data-text="原产材料与非原产材料区分"><span class="case-code">04-15</span><span class="case-text">原产材料与非原产材料区分</span></div>
+        <div class="case-row" data-text="原产地累积规则"><span class="case-code">04-16</span><span class="case-text">原产地累积规则</span></div>
+        <div class="case-row" data-text="RCEP原产地规则"><span class="case-code">04-17</span><span class="case-text">RCEP原产地规则</span></div>
+        <div class="case-row" data-text="RCEP区域价值成分"><span class="case-code">04-18</span><span class="case-text">RCEP区域价值成分</span></div>
+        <div class="case-row" data-text="RCEP累积规则"><span class="case-code">04-19</span><span class="case-text">RCEP累积规则</span></div>
+        <div class="case-row" data-text="RCEP原产地证书"><span class="case-code">04-20</span><span class="case-text">RCEP原产地证书</span></div>
+        <div class="case-row" data-text="中国—东盟原产地规则"><span class="case-code">04-21</span><span class="case-text">中国—东盟原产地规则</span></div>
+        <div class="case-row" data-text="中国—东盟原产地证书"><span class="case-code">04-22</span><span class="case-text">中国—东盟原产地证书</span></div>
+        <div class="case-row" data-text="中国—韩国原产地规则"><span class="case-code">04-23</span><span class="case-text">中国—韩国原产地规则</span></div>
+        <div class="case-row" data-text="中国—澳大利亚原产地规则"><span class="case-code">04-24</span><span class="case-text">中国—澳大利亚原产地规则</span></div>
+        <div class="case-row" data-text="中国—新西兰原产地规则"><span class="case-code">04-25</span><span class="case-text">中国—新西兰原产地规则</span></div>
+        <div class="case-row" data-text="中国—智利原产地规则"><span class="case-code">04-26</span><span class="case-text">中国—智利原产地规则</span></div>
+        <div class="case-row" data-text="自贸协定税率适用"><span class="case-code">04-27</span><span class="case-text">自贸协定税率适用</span></div>
+        <div class="case-row" data-text="最惠国税率与协定税率比较"><span class="case-code">04-28</span><span class="case-text">最惠国税率与协定税率比较</span></div>
+        <div class="case-row" data-text="原产地优惠税率判断"><span class="case-code">04-29</span><span class="case-text">原产地优惠税率判断</span></div>
+        <div class="case-row" data-text="原产地证明文件审核"><span class="case-code">04-30</span><span class="case-text">原产地证明文件审核</span></div>
+        <div class="case-row" data-text="原产地证信息错误"><span class="case-code">04-31</span><span class="case-text">原产地证信息错误</span></div>
+        <div class="case-row" data-text="原产地证补发"><span class="case-code">04-32</span><span class="case-text">原产地证补发</span></div>
+        <div class="case-row" data-text="原产地证更改"><span class="case-code">04-33</span><span class="case-text">原产地证更改</span></div>
+        <div class="case-row" data-text="原产地证与报关单不一致"><span class="case-code">04-34</span><span class="case-text">原产地证与报关单不一致</span></div>
+        <div class="case-row" data-text="原产地证与商业发票不一致"><span class="case-code">04-35</span><span class="case-text">原产地证与商业发票不一致</span></div>
+        <div class="case-row" data-text="原产地证与实际货物不一致"><span class="case-code">04-36</span><span class="case-text">原产地证与实际货物不一致</span></div>
+        <div class="case-row" data-text="原产地声明审核"><span class="case-code">04-37</span><span class="case-text">原产地声明审核</span></div>
+        <div class="case-row" data-text="客户要求提供原产地证"><span class="case-code">04-38</span><span class="case-text">客户要求提供原产地证</span></div>
+        <div class="case-row" data-text="客户指定原产地"><span class="case-code">04-39</span><span class="case-text">客户指定原产地</span></div>
+        <div class="case-row" data-text="客户要求做成某国原产地"><span class="case-code">04-40</span><span class="case-text">客户要求“做成”某国原产地</span></div>
+        <div class="case-row" data-text="供应商原产地信息错误"><span class="case-code">04-41</span><span class="case-text">供应商原产地信息错误</span></div>
+        <div class="case-row" data-text="生产企业原产地资料审核"><span class="case-code">04-42</span><span class="case-text">生产企业原产地资料审核</span></div>
+        <div class="case-row" data-text="原产地成本资料审核"><span class="case-code">04-43</span><span class="case-text">原产地成本资料审核</span></div>
+        <div class="case-row" data-text="生产工艺资料审核"><span class="case-code">04-44</span><span class="case-text">生产工艺资料审核</span></div>
+        <div class="case-row" data-text="原产地备案资料"><span class="case-code">04-45</span><span class="case-text">原产地备案资料</span></div>
+        <div class="case-row" data-text="海关质疑原产地"><span class="case-code">04-46</span><span class="case-text">海关质疑原产地</span></div>
+        <div class="case-row" data-text="海关要求提供原产地证明"><span class="case-code">04-47</span><span class="case-text">海关要求提供原产地证明</span></div>
+        <div class="case-row" data-text="原产地核查"><span class="case-code">04-48</span><span class="case-text">原产地核查</span></div>
+        <div class="case-row" data-text="原产地争议处理"><span class="case-code">04-49</span><span class="case-text">原产地争议处理</span></div>
+        <div class="case-row" data-text="原产地与关税联动"><span class="case-code">04-50</span><span class="case-text">原产地与关税联动</span></div>
+        <div class="case-row" data-text="原产地与HS编码联动"><span class="case-code">04-51</span><span class="case-text">原产地与HS编码联动</span></div>
+        <div class="case-row" data-text="原产地与出口退税联动"><span class="case-code">04-52</span><span class="case-text">原产地与出口退税联动</span></div>
+        <div class="case-row" data-text="原产地与贸易壁垒"><span class="case-code">04-53</span><span class="case-text">原产地与贸易壁垒</span></div>
+        <div class="case-row" data-text="原产地与反倾销措施"><span class="case-code">04-54</span><span class="case-text">原产地与反倾销措施</span></div>
+        <div class="case-row" data-text="原产地与进口国清关"><span class="case-code">04-55</span><span class="case-text">原产地与进口国清关</span></div>
+        <div class="case-row" data-text="第三国转口与原产地"><span class="case-code">04-56</span><span class="case-text">第三国转口与原产地</span></div>
+        <div class="case-row" data-text="香港澳门转口贸易原产地"><span class="case-code">04-57</span><span class="case-text">香港/澳门转口贸易原产地</span></div>
+        <div class="case-row" data-text="保税加工与原产地"><span class="case-code">04-58</span><span class="case-text">保税加工与原产地</span></div>
+        <div class="case-row" data-text="来料加工与原产地"><span class="case-code">04-59</span><span class="case-text">来料加工与原产地</span></div>
+        <div class="case-row" data-text="进料加工与原产地"><span class="case-code">04-60</span><span class="case-text">进料加工与原产地</span></div>
+        <div class="case-row" data-text="委托加工原产地"><span class="case-code">04-61</span><span class="case-text">委托加工原产地</span></div>
+        <div class="case-row" data-text="OEM产品原产地"><span class="case-code">04-62</span><span class="case-text">OEM产品原产地</span></div>
+        <div class="case-row" data-text="ODM产品原产地"><span class="case-code">04-63</span><span class="case-text">ODM产品原产地</span></div>
+        <div class="case-row" data-text="跨国供应链原产地"><span class="case-code">04-64</span><span class="case-text">跨国供应链原产地</span></div>
+        <div class="case-row" data-text="多国零部件组装原产地"><span class="case-code">04-65</span><span class="case-text">多国零部件组装原产地</span></div>
+        <div class="case-row" data-text="中国生产外国品牌原产地"><span class="case-code">04-66</span><span class="case-text">中国生产、外国品牌原产地</span></div>
+        <div class="case-row" data-text="中国品牌外国生产原产地"><span class="case-code">04-67</span><span class="case-text">中国品牌、外国生产原产地</span></div>
+        <div class="case-row" data-text="同一产品不同生产地原产地"><span class="case-code">04-68</span><span class="case-text">同一产品不同生产地原产地</span></div>
+        <div class="case-row" data-text="原产地判断综合案例"><span class="case-code">04-69</span><span class="case-text">原产地判断综合案例</span></div>
+        <div class="case-row" data-text="原产地争议高压实战案例"><span class="case-code">04-70</span><span class="case-text">原产地争议高压实战案例</span></div>
+
+    </div>
+</div>
+
+
+<!-- =========================================================
+     05 海关查验
+========================================================= -->
+
+<div class="category-card" id="cat05">
+
+    <div class="category-head">
+        <div class="category-head-left">
+            <span class="category-number">05</span>
+            <span class="category-title">海关查验</span>
+        </div>
+        <span class="category-count">70 个案例</span>
+    </div>
+
+    <div class="case-list">
+
+        <div class="case-row" data-text="海关查验基础流程"><span class="case-code">05-01</span><span class="case-text">海关查验基础流程</span></div>
+        <div class="case-row" data-text="出口货物被查验"><span class="case-code">05-02</span><span class="case-text">出口货物被查验</span></div>
+        <div class="case-row" data-text="进口货物被查验"><span class="case-code">05-03</span><span class="case-text">进口货物被查验</span></div>
+        <div class="case-row" data-text="查验通知处理"><span class="case-code">05-04</span><span class="case-text">查验通知处理</span></div>
+        <div class="case-row" data-text="查验前资料准备"><span class="case-code">05-05</span><span class="case-text">查验前资料准备</span></div>
+        <div class="case-row" data-text="查验前货物准备"><span class="case-code">05-06</span><span class="case-text">查验前货物准备</span></div>
+        <div class="case-row" data-text="查验现场协调"><span class="case-code">05-07</span><span class="case-text">查验现场协调</span></div>
+        <div class="case-row" data-text="查验结果正常"><span class="case-code">05-08</span><span class="case-text">查验结果正常</span></div>
+        <div class="case-row" data-text="查验发现数量不符"><span class="case-code">05-09</span><span class="case-text">查验发现数量不符</span></div>
+        <div class="case-row" data-text="查验发现重量不符"><span class="case-code">05-10</span><span class="case-text">查验发现重量不符</span></div>
+        <div class="case-row" data-text="查验发现型号不符"><span class="case-code">05-11</span><span class="case-text">查验发现型号不符</span></div>
+        <div class="case-row" data-text="查验发现规格不符"><span class="case-code">05-12</span><span class="case-text">查验发现规格不符</span></div>
+        <div class="case-row" data-text="查验发现材质不符"><span class="case-code">05-13</span><span class="case-text">查验发现材质不符</span></div>
+        <div class="case-row" data-text="查验发现品名不符"><span class="case-code">05-14</span><span class="case-text">查验发现品名不符</span></div>
+        <div class="case-row" data-text="查验发现品牌不符"><span class="case-code">05-15</span><span class="case-text">查验发现品牌不符</span></div>
+        <div class="case-row" data-text="查验发现包装不符"><span class="case-code">05-16</span><span class="case-text">查验发现包装不符</span></div>
+        <div class="case-row" data-text="查验发现货物混装"><span class="case-code">05-17</span><span class="case-text">查验发现货物混装</span></div>
+        <div class="case-row" data-text="查验发现漏报货物"><span class="case-code">05-18</span><span class="case-text">查验发现漏报货物</span></div>
+        <div class="case-row" data-text="查验发现多报货物"><span class="case-code">05-19</span><span class="case-text">查验发现多报货物</span></div>
+        <div class="case-row" data-text="查验发现错报货物"><span class="case-code">05-20</span><span class="case-text">查验发现错报货物</span></div>
+        <div class="case-row" data-text="查验发现未申报货物"><span class="case-code">05-21</span><span class="case-text">查验发现未申报货物</span></div>
+        <div class="case-row" data-text="查验发现实际HS编码存在争议"><span class="case-code">05-22</span><span class="case-text">查验发现实际HS编码存在争议</span></div>
+        <div class="case-row" data-text="查验发现申报要素错误"><span class="case-code">05-23</span><span class="case-text">查验发现申报要素错误</span></div>
+        <div class="case-row" data-text="查验发现价格异常"><span class="case-code">05-24</span><span class="case-text">查验发现价格异常</span></div>
+        <div class="case-row" data-text="海关质疑成交价格"><span class="case-code">05-25</span><span class="case-text">海关质疑成交价格</span></div>
+        <div class="case-row" data-text="海关要求补充价格资料"><span class="case-code">05-26</span><span class="case-text">海关要求补充价格资料</span></div>
+        <div class="case-row" data-text="海关要求提供合同"><span class="case-code">05-27</span><span class="case-text">海关要求提供合同</span></div>
+        <div class="case-row" data-text="海关要求提供发票"><span class="case-code">05-28</span><span class="case-text">海关要求提供发票</span></div>
+        <div class="case-row" data-text="海关要求提供装箱单"><span class="case-code">05-29</span><span class="case-text">海关要求提供装箱单</span></div>
+        <div class="case-row" data-text="海关要求提供产品说明书"><span class="case-code">05-30</span><span class="case-text">海关要求提供产品说明书</span></div>
+        <div class="case-row" data-text="海关要求提供技术资料"><span class="case-code">05-31</span><span class="case-text">海关要求提供技术资料</span></div>
+        <div class="case-row" data-text="海关要求提供原产地资料"><span class="case-code">05-32</span><span class="case-text">海关要求提供原产地资料</span></div>
+        <div class="case-row" data-text="查验发现归类错误"><span class="case-code">05-33</span><span class="case-text">查验发现归类错误</span></div>
+        <div class="case-row" data-text="查验发现税率错误"><span class="case-code">05-34</span><span class="case-text">查验发现税率错误</span></div>
+        <div class="case-row" data-text="查验发现监管条件问题"><span class="case-code">05-35</span><span class="case-text">查验发现监管条件问题</span></div>
+        <div class="case-row" data-text="查验发现许可证问题"><span class="case-code">05-36</span><span class="case-text">查验发现许可证问题</span></div>
+        <div class="case-row" data-text="查验发现申报价格与实际不符"><span class="case-code">05-37</span><span class="case-text">查验发现申报价格与实际不符</span></div>
+        <div class="case-row" data-text="查验发现货物状态异常"><span class="case-code">05-38</span><span class="case-text">查验发现货物状态异常</span></div>
+        <div class="case-row" data-text="查验发现包装标识问题"><span class="case-code">05-39</span><span class="case-text">查验发现包装标识问题</span></div>
+        <div class="case-row" data-text="查验发现危险品申报问题"><span class="case-code">05-40</span><span class="case-text">查验发现危险品申报问题</span></div>
+        <div class="case-row" data-text="查验发现实际装货与装箱单不符"><span class="case-code">05-41</span><span class="case-text">查验发现实际装货与装箱单不符</span></div>
+        <div class="case-row" data-text="查验发现实际货物与发票不符"><span class="case-code">05-42</span><span class="case-text">查验发现实际货物与发票不符</span></div>
+        <div class="case-row" data-text="查验发现实际货物与合同不符"><span class="case-code">05-43</span><span class="case-text">查验发现实际货物与合同不符</span></div>
+        <div class="case-row" data-text="查验后补充申报"><span class="case-code">05-44</span><span class="case-text">查验后补充申报</span></div>
+        <div class="case-row" data-text="查验后修改报关单"><span class="case-code">05-45</span><span class="case-text">查验后修改报关单</span></div>
+        <div class="case-row" data-text="查验后补税"><span class="case-code">05-46</span><span class="case-text">查验后补税</span></div>
+        <div class="case-row" data-text="查验后退单"><span class="case-code">05-47</span><span class="case-text">查验后退单</span></div>
+        <div class="case-row" data-text="查验后重新申报"><span class="case-code">05-48</span><span class="case-text">查验后重新申报</span></div>
+        <div class="case-row" data-text="查验导致船期延误"><span class="case-code">05-49</span><span class="case-text">查验导致船期延误</span></div>
+        <div class="case-row" data-text="查验导致仓储费用增加"><span class="case-code">05-50</span><span class="case-text">查验导致仓储费用增加</span></div>
+        <div class="case-row" data-text="查验导致客户投诉"><span class="case-code">05-51</span><span class="case-text">查验导致客户投诉</span></div>
+        <div class="case-row" data-text="查验导致目的港清关问题"><span class="case-code">05-52</span><span class="case-text">查验导致目的港清关问题</span></div>
+        <div class="case-row" data-text="查验异常与货代协调"><span class="case-code">05-53</span><span class="case-text">查验异常与货代协调</span></div>
+        <div class="case-row" data-text="查验异常与报关行协调"><span class="case-code">05-54</span><span class="case-text">查验异常与报关行协调</span></div>
+        <div class="case-row" data-text="查验异常与业务员协调"><span class="case-code">05-55</span><span class="case-text">查验异常与业务员协调</span></div>
+        <div class="case-row" data-text="查验异常与仓库协调"><span class="case-code">05-56</span><span class="case-text">查验异常与仓库协调</span></div>
+        <div class="case-row" data-text="查验异常与供应商协调"><span class="case-code">05-57</span><span class="case-text">查验异常与供应商协调</span></div>
+        <div class="case-row" data-text="企业对查验结果有异议"><span class="case-code">05-58</span><span class="case-text">企业对查验结果有异议</span></div>
+        <div class="case-row" data-text="海关要求企业解释异常"><span class="case-code">05-59</span><span class="case-text">海关要求企业解释异常</span></div>
+        <div class="case-row" data-text="历史申报问题被查验发现"><span class="case-code">05-60</span><span class="case-text">历史申报问题被查验发现</span></div>
+        <div class="case-row" data-text="同批货物多项异常"><span class="case-code">05-61</span><span class="case-text">同批货物多项异常</span></div>
+        <div class="case-row" data-text="查验与归类争议综合案例"><span class="case-code">05-62</span><span class="case-text">查验与归类争议综合案例</span></div>
+        <div class="case-row" data-text="查验与价格争议综合案例"><span class="case-code">05-63</span><span class="case-text">查验与价格争议综合案例</span></div>
+        <div class="case-row" data-text="查验与原产地争议综合案例"><span class="case-code">05-64</span><span class="case-text">查验与原产地争议综合案例</span></div>
+        <div class="case-row" data-text="查验与税费争议综合案例"><span class="case-code">05-65</span><span class="case-text">查验与税费争议综合案例</span></div>
+        <div class="case-row" data-text="高价值货物查验案例"><span class="case-code">05-66</span><span class="case-text">高价值货物查验案例</span></div>
+        <div class="case-row" data-text="紧急出口货物查验案例"><span class="case-code">05-67</span><span class="case-text">紧急出口货物查验案例</span></div>
+        <div class="case-row" data-text="船期临近的查验案例"><span class="case-code">05-68</span><span class="case-text">船期临近的查验案例</span></div>
+        <div class="case-row" data-text="多方催促下的查验案例"><span class="case-code">05-69</span><span class="case-text">多方催促下的查验案例</span></div>
+        <div class="case-row" data-text="海关查验综合实战案例"><span class="case-code">05-70</span><span class="case-text">海关查验综合实战案例</span></div>
+
+    </div>
+</div>
+
+
+<!-- =========================================================
+     06 外贸业务综合
+========================================================= -->
+
+<div class="category-card" id="cat06">
+
+    <div class="category-head">
+        <div class="category-head-left">
+            <span class="category-number">06</span>
+            <span class="category-title">外贸业务综合</span>
+        </div>
+        <span class="category-count">70 个案例</span>
+    </div>
+
+    <div class="case-list">
+
+        <div class="case-row" data-text="客户询盘处理"><span class="case-code">06-01</span><span class="case-text">客户询盘处理</span></div>
+        <div class="case-row" data-text="客户需求分析"><span class="case-code">06-02</span><span class="case-text">客户需求分析</span></div>
+        <div class="case-row" data-text="产品信息确认"><span class="case-code">06-03</span><span class="case-text">产品信息确认</span></div>
+        <div class="case-row" data-text="外贸报价"><span class="case-code">06-04</span><span class="case-text">外贸报价</span></div>
+        <div class="case-row" data-text="报价成本核算"><span class="case-code">06-05</span><span class="case-text">报价成本核算</span></div>
+        <div class="case-row" data-text="FOB报价"><span class="case-code">06-06</span><span class="case-text">FOB报价</span></div>
+        <div class="case-row" data-text="CFR报价"><span class="case-code">06-07</span><span class="case-text">CFR报价</span></div>
+        <div class="case-row" data-text="CIF报价"><span class="case-code">06-08</span><span class="case-text">CIF报价</span></div>
+        <div class="case-row" data-text="EXW报价"><span class="case-code">06-09</span><span class="case-text">EXW报价</span></div>
+        <div class="case-row" data-text="FCA报价"><span class="case-code">06-10</span><span class="case-text">FCA报价</span></div>
+        <div class="case-row" data-text="DAP报价"><span class="case-code">06-11</span><span class="case-text">DAP报价</span></div>
+        <div class="case-row" data-text="DDP报价"><span class="case-code">06-12</span><span class="case-text">DDP报价</span></div>
+        <div class="case-row" data-text="Incoterms选择"><span class="case-code">06-13</span><span class="case-text">Incoterms选择</span></div>
+        <div class="case-row" data-text="客户压价"><span class="case-code">06-14</span><span class="case-text">客户压价</span></div>
+        <div class="case-row" data-text="竞争对手压价"><span class="case-code">06-15</span><span class="case-text">竞争对手压价</span></div>
+        <div class="case-row" data-text="报价后客户不回复"><span class="case-code">06-16</span><span class="case-text">报价后客户不回复</span></div>
+        <div class="case-row" data-text="客户要求重新报价"><span class="case-code">06-17</span><span class="case-text">客户要求重新报价</span></div>
+        <div class="case-row" data-text="PI制作与审核"><span class="case-code">06-18</span><span class="case-text">PI制作与审核</span></div>
+        <div class="case-row" data-text="外贸合同审核"><span class="case-code">06-19</span><span class="case-text">外贸合同审核</span></div>
+        <div class="case-row" data-text="付款方式选择"><span class="case-code">06-20</span><span class="case-text">付款方式选择</span></div>
+        <div class="case-row" data-text="T/T付款"><span class="case-code">06-21</span><span class="case-text">T/T付款</span></div>
+        <div class="case-row" data-text="L/C信用证"><span class="case-code">06-22</span><span class="case-text">L/C信用证</span></div>
+        <div class="case-row" data-text="D/P付款"><span class="case-code">06-23</span><span class="case-text">D/P付款</span></div>
+        <div class="case-row" data-text="D/A付款"><span class="case-code">06-24</span><span class="case-text">D/A付款</span></div>
+        <div class="case-row" data-text="OA赊账交易"><span class="case-code">06-25</span><span class="case-text">OA赊账交易</span></div>
+        <div class="case-row" data-text="客户要求账期"><span class="case-code">06-26</span><span class="case-text">客户要求账期</span></div>
+        <div class="case-row" data-text="客户迟迟不付款"><span class="case-code">06-27</span><span class="case-text">客户迟迟不付款</span></div>
+        <div class="case-row" data-text="收款金额不符"><span class="case-code">06-28</span><span class="case-text">收款金额不符</span></div>
+        <div class="case-row" data-text="银行手续费争议"><span class="case-code">06-29</span><span class="case-text">银行手续费争议</span></div>
+        <div class="case-row" data-text="订单确认"><span class="case-code">06-30</span><span class="case-text">订单确认</span></div>
+        <div class="case-row" data-text="采购与供应商协调"><span class="case-code">06-31</span><span class="case-text">采购与供应商协调</span></div>
+        <div class="case-row" data-text="供应商交期延误"><span class="case-code">06-32</span><span class="case-text">供应商交期延误</span></div>
+        <div class="case-row" data-text="产品质量异常"><span class="case-code">06-33</span><span class="case-text">产品质量异常</span></div>
+        <div class="case-row" data-text="产品规格与订单不符"><span class="case-code">06-34</span><span class="case-text">产品规格与订单不符</span></div>
+        <div class="case-row" data-text="包装要求不符"><span class="case-code">06-35</span><span class="case-text">包装要求不符</span></div>
+        <div class="case-row" data-text="客户要求验货"><span class="case-code">06-36</span><span class="case-text">客户要求验货</span></div>
+        <div class="case-row" data-text="装柜安排"><span class="case-code">06-37</span><span class="case-text">装柜安排</span></div>
+        <div class="case-row" data-text="拼箱出口"><span class="case-code">06-38</span><span class="case-text">拼箱出口</span></div>
+        <div class="case-row" data-text="整柜出口"><span class="case-code">06-39</span><span class="case-text">整柜出口</span></div>
+        <div class="case-row" data-text="海运订舱"><span class="case-code">06-40</span><span class="case-text">海运订舱</span></div>
+        <div class="case-row" data-text="空运出口"><span class="case-code">06-41</span><span class="case-text">空运出口</span></div>
+        <div class="case-row" data-text="快递出口"><span class="case-code">06-42</span><span class="case-text">快递出口</span></div>
+        <div class="case-row" data-text="货代选择"><span class="case-code">06-43</span><span class="case-text">货代选择</span></div>
+        <div class="case-row" data-text="船期延误"><span class="case-code">06-44</span><span class="case-text">船期延误</span></div>
+        <div class="case-row" data-text="船公司甩柜"><span class="case-code">06-45</span><span class="case-text">船公司甩柜</span></div>
+        <div class="case-row" data-text="截关时间冲突"><span class="case-code">06-46</span><span class="case-text">截关时间冲突</span></div>
+        <div class="case-row" data-text="出口报关"><span class="case-code">06-47</span><span class="case-text">出口报关</span></div>
+        <div class="case-row" data-text="报关资料审核"><span class="case-code">06-48</span><span class="case-text">报关资料审核</span></div>
+        <div class="case-row" data-text="海关查验"><span class="case-code">06-49</span><span class="case-text">海关查验</span></div>
+        <div class="case-row" data-text="出口退税"><span class="case-code">06-50</span><span class="case-text">出口退税</span></div>
+        <div class="case-row" data-text="提单审核"><span class="case-code">06-51</span><span class="case-text">提单审核</span></div>
+        <div class="case-row" data-text="提单信息错误"><span class="case-code">06-52</span><span class="case-text">提单信息错误</span></div>
+        <div class="case-row" data-text="电放提单"><span class="case-code">06-53</span><span class="case-text">电放提单</span></div>
+        <div class="case-row" data-text="原产地证办理"><span class="case-code">06-54</span><span class="case-text">原产地证办理</span></div>
+        <div class="case-row" data-text="客户进口清关"><span class="case-code">06-55</span><span class="case-text">客户进口清关</span></div>
+        <div class="case-row" data-text="客户清关资料问题"><span class="case-code">06-56</span><span class="case-text">客户清关资料问题</span></div>
+        <div class="case-row" data-text="客户目的港产生费用"><span class="case-code">06-57</span><span class="case-text">客户目的港产生费用</span></div>
+        <div class="case-row" data-text="客户拒绝提货"><span class="case-code">06-58</span><span class="case-text">客户拒绝提货</span></div>
+        <div class="case-row" data-text="货物被目的国海关扣留"><span class="case-code">06-59</span><span class="case-text">货物被目的国海关扣留</span></div>
+        <div class="case-row" data-text="客户索赔"><span class="case-code">06-60</span><span class="case-text">客户索赔</span></div>
+        <div class="case-row" data-text="货损索赔"><span class="case-code">06-61</span><span class="case-text">货损索赔</span></div>
+        <div class="case-row" data-text="质量索赔"><span class="case-code">06-62</span><span class="case-text">质量索赔</span></div>
+        <div class="case-row" data-text="延迟交货索赔"><span class="case-code">06-63</span><span class="case-text">延迟交货索赔</span></div>
+        <div class="case-row" data-text="外贸订单取消"><span class="case-code">06-64</span><span class="case-text">外贸订单取消</span></div>
+        <div class="case-row" data-text="客户临时修改订单"><span class="case-code">06-65</span><span class="case-text">客户临时修改订单</span></div>
+        <div class="case-row" data-text="客户要求分批出货"><span class="case-code">06-66</span><span class="case-text">客户要求分批出货</span></div>
+        <div class="case-row" data-text="多供应商协调"><span class="case-code">06-67</span><span class="case-text">多供应商协调</span></div>
+        <div class="case-row" data-text="多国家客户订单管理"><span class="case-code">06-68</span><span class="case-text">多国家客户订单管理</span></div>
+        <div class="case-row" data-text="外贸业务全流程综合案例"><span class="case-code">06-69</span><span class="case-text">外贸业务全流程综合案例</span></div>
+        <div class="case-row" data-text="外贸业务高压综合实战"><span class="case-code">06-70</span><span class="case-text">外贸业务高压综合实战</span></div>
+
+    </div>
+</div>
+
+
+<!-- =========================================================
+     07 突发事故
+========================================================= -->
+
+<div class="category-card" id="cat07">
+
+    <div class="category-head">
+        <div class="category-head-left">
+            <span class="category-number">07</span>
+            <span class="category-title">突发事故</span>
+        </div>
+        <span class="category-count">70 个案例</span>
+    </div>
+
+    <div class="case-list">
+
+        <div class="case-row" data-text="报关资料临时发现错误"><span class="case-code">07-01</span><span class="case-text">报关资料临时发现错误</span></div>
+        <div class="case-row" data-text="货物已经装柜才发现错误"><span class="case-code">07-02</span><span class="case-text">货物已经装柜才发现错误</span></div>
+        <div class="case-row" data-text="报关后发现申报错误"><span class="case-code">07-03</span><span class="case-text">报关后发现申报错误</span></div>
+        <div class="case-row" data-text="船已经离港才发现错误"><span class="case-code">07-04</span><span class="case-text">船已经离港才发现错误</span></div>
+        <div class="case-row" data-text="客户付款后发现订单错误"><span class="case-code">07-05</span><span class="case-text">客户付款后发现订单错误</span></div>
+        <div class="case-row" data-text="客户临时取消订单"><span class="case-code">07-06</span><span class="case-text">客户临时取消订单</span></div>
+        <div class="case-row" data-text="客户临时修改产品规格"><span class="case-code">07-07</span><span class="case-text">客户临时修改产品规格</span></div>
+        <div class="case-row" data-text="客户临时修改数量"><span class="case-code">07-08</span><span class="case-text">客户临时修改数量</span></div>
+        <div class="case-row" data-text="客户临时修改包装"><span class="case-code">07-09</span><span class="case-text">客户临时修改包装</span></div>
+        <div class="case-row" data-text="客户临时修改收货信息"><span class="case-code">07-10</span><span class="case-text">客户临时修改收货信息</span></div>
+        <div class="case-row" data-text="供应商临时涨价"><span class="case-code">07-11</span><span class="case-text">供应商临时涨价</span></div>
+        <div class="case-row" data-text="供应商突然无法供货"><span class="case-code">07-12</span><span class="case-text">供应商突然无法供货</span></div>
+        <div class="case-row" data-text="供应商交期严重延误"><span class="case-code">07-13</span><span class="case-text">供应商交期严重延误</span></div>
+        <div class="case-row" data-text="供应商提供错误资料"><span class="case-code">07-14</span><span class="case-text">供应商提供错误资料</span></div>
+        <div class="case-row" data-text="供应商提供虚假资料"><span class="case-code">07-15</span><span class="case-text">供应商提供虚假资料</span></div>
+        <div class="case-row" data-text="产品质量突然出现问题"><span class="case-code">07-16</span><span class="case-text">产品质量突然出现问题</span></div>
+        <div class="case-row" data-text="大货与样品不一致"><span class="case-code">07-17</span><span class="case-text">大货与样品不一致</span></div>
+        <div class="case-row" data-text="装柜后发现数量不符"><span class="case-code">07-18</span><span class="case-text">装柜后发现数量不符</span></div>
+        <div class="case-row" data-text="装柜后发现型号不符"><span class="case-code">07-19</span><span class="case-text">装柜后发现型号不符</span></div>
+        <div class="case-row" data-text="装柜后发现货物少装"><span class="case-code">07-20</span><span class="case-text">装柜后发现货物少装</span></div>
+        <div class="case-row" data-text="装柜后发现货物多装"><span class="case-code">07-21</span><span class="case-text">装柜后发现货物多装</span></div>
+        <div class="case-row" data-text="海关突然查验"><span class="case-code">07-22</span><span class="case-text">海关突然查验</span></div>
+        <div class="case-row" data-text="海关查验发现异常"><span class="case-code">07-23</span><span class="case-text">海关查验发现异常</span></div>
+        <div class="case-row" data-text="海关质疑HS编码"><span class="case-code">07-24</span><span class="case-text">海关质疑HS编码</span></div>
+        <div class="case-row" data-text="海关质疑申报价格"><span class="case-code">07-25</span><span class="case-text">海关质疑申报价格</span></div>
+        <div class="case-row" data-text="海关要求补充资料"><span class="case-code">07-26</span><span class="case-text">海关要求补充资料</span></div>
+        <div class="case-row" data-text="海关要求企业解释"><span class="case-code">07-27</span><span class="case-text">海关要求企业解释</span></div>
+        <div class="case-row" data-text="海关退单但船期临近"><span class="case-code">07-28</span><span class="case-text">海关退单但船期临近</span></div>
+        <div class="case-row" data-text="海关查验导致赶不上船"><span class="case-code">07-29</span><span class="case-text">海关查验导致赶不上船</span></div>
+        <div class="case-row" data-text="船期突然提前"><span class="case-code">07-30</span><span class="case-text">船期突然提前</span></div>
+        <div class="case-row" data-text="船期突然延误"><span class="case-code">07-31</span><span class="case-text">船期突然延误</span></div>
+        <div class="case-row" data-text="船公司甩柜"><span class="case-code">07-32</span><span class="case-text">船公司甩柜</span></div>
+        <div class="case-row" data-text="船公司取消航次"><span class="case-code">07-33</span><span class="case-text">船公司取消航次</span></div>
+        <div class="case-row" data-text="截关时间提前"><span class="case-code">07-34</span><span class="case-text">截关时间提前</span></div>
+        <div class="case-row" data-text="货代临时涨价"><span class="case-code">07-35</span><span class="case-text">货代临时涨价</span></div>
+        <div class="case-row" data-text="货代订舱出错"><span class="case-code">07-36</span><span class="case-text">货代订舱出错</span></div>
+        <div class="case-row" data-text="货代提供错误信息"><span class="case-code">07-37</span><span class="case-text">货代提供错误信息</span></div>
+        <div class="case-row" data-text="货代与报关行互相甩锅"><span class="case-code">07-38</span><span class="case-text">货代与报关行互相甩锅</span></div>
+        <div class="case-row" data-text="仓库无法按时装货"><span class="case-code">07-39</span><span class="case-text">仓库无法按时装货</span></div>
+        <div class="case-row" data-text="车辆临时无法进场"><span class="case-code">07-40</span><span class="case-text">车辆临时无法进场</span></div>
+        <div class="case-row" data-text="提单信息出现错误"><span class="case-code">07-41</span><span class="case-text">提单信息出现错误</span></div>
+        <div class="case-row" data-text="提单已经签发才发现错误"><span class="case-code">07-42</span><span class="case-text">提单已经签发才发现错误</span></div>
+        <div class="case-row" data-text="原产地证出现错误"><span class="case-code">07-43</span><span class="case-text">原产地证出现错误</span></div>
+        <div class="case-row" data-text="商业发票出现错误"><span class="case-code">07-44</span><span class="case-text">商业发票出现错误</span></div>
+        <div class="case-row" data-text="装箱单出现错误"><span class="case-code">07-45</span><span class="case-text">装箱单出现错误</span></div>
+        <div class="case-row" data-text="单证之间数据互相矛盾"><span class="case-code">07-46</span><span class="case-text">单证之间数据互相矛盾</span></div>
+        <div class="case-row" data-text="客户目的港无法清关"><span class="case-code">07-47</span><span class="case-text">客户目的港无法清关</span></div>
+        <div class="case-row" data-text="客户被目的国海关扣货"><span class="case-code">07-48</span><span class="case-text">客户被目的国海关扣货</span></div>
+        <div class="case-row" data-text="客户拒绝支付目的港费用"><span class="case-code">07-49</span><span class="case-text">客户拒绝支付目的港费用</span></div>
+        <div class="case-row" data-text="客户拒绝提货"><span class="case-code">07-50</span><span class="case-text">客户拒绝提货</span></div>
+        <div class="case-row" data-text="客户要求承担额外费用"><span class="case-code">07-51</span><span class="case-text">客户要求承担额外费用</span></div>
+        <div class="case-row" data-text="客户提出索赔"><span class="case-code">07-52</span><span class="case-text">客户提出索赔</span></div>
+        <div class="case-row" data-text="货物运输途中损坏"><span class="case-code">07-53</span><span class="case-text">货物运输途中损坏</span></div>
+        <div class="case-row" data-text="货物运输途中丢失"><span class="case-code">07-54</span><span class="case-text">货物运输途中丢失</span></div>
+        <div class="case-row" data-text="出口退税资料出现问题"><span class="case-code">07-55</span><span class="case-text">出口退税资料出现问题</span></div>
+        <div class="case-row" data-text="收汇金额与报关金额异常"><span class="case-code">07-56</span><span class="case-text">收汇金额与报关金额异常</span></div>
+        <div class="case-row" data-text="银行付款出现异常"><span class="case-code">07-57</span><span class="case-text">银行付款出现异常</span></div>
+        <div class="case-row" data-text="客户突然要求更换付款方式"><span class="case-code">07-58</span><span class="case-text">客户突然要求更换付款方式</span></div>
+        <div class="case-row" data-text="客户突然要求降价"><span class="case-code">07-59</span><span class="case-text">客户突然要求降价</span></div>
+        <div class="case-row" data-text="客户突然要求延期付款"><span class="case-code">07-60</span><span class="case-text">客户突然要求延期付款</span></div>
+        <div class="case-row" data-text="老板要求违规操作"><span class="case-code">07-61</span><span class="case-text">老板要求违规操作</span></div>
+        <div class="case-row" data-text="业务员要求先报再说"><span class="case-code">07-62</span><span class="case-text">业务员要求“先报再说”</span></div>
+        <div class="case-row" data-text="客户要求低报"><span class="case-code">07-63</span><span class="case-text">客户要求低报</span></div>
+        <div class="case-row" data-text="客户要求修改品名"><span class="case-code">07-64</span><span class="case-text">客户要求修改品名</span></div>
+        <div class="case-row" data-text="客户要求修改原产地"><span class="case-code">07-65</span><span class="case-text">客户要求修改原产地</span></div>
+        <div class="case-row" data-text="发现历史申报存在错误"><span class="case-code">07-66</span><span class="case-text">发现历史申报存在错误</span></div>
+        <div class="case-row" data-text="发现公司长期存在错误申报"><span class="case-code">07-67</span><span class="case-text">发现公司长期存在错误申报</span></div>
+        <div class="case-row" data-text="多个部门同时出现问题"><span class="case-code">07-68</span><span class="case-text">多个部门同时出现问题</span></div>
+        <div class="case-row" data-text="船期+海关+客户三重危机"><span class="case-code">07-69</span><span class="case-text">船期+海关+客户三重危机</span></div>
+        <div class="case-row" data-text="外贸订单全面失控综合实战"><span class="case-code">07-70</span><span class="case-text">外贸订单全面失控综合实战</span></div>
+
+    </div>
+</div>
+
+
+<!-- =========================================================
+     08 现实职场
+========================================================= -->
+
+<div class="category-card" id="cat08">
+
+    <div class="category-head">
+        <div class="category-head-left">
+            <span class="category-number">08</span>
+            <span class="category-title">现实职场</span>
+        </div>
+        <span class="category-count">70 个案例</span>
+    </div>
+
+    <div class="case-list">
+
+        <div class="case-row" data-text="老板临时催单"><span class="case-code">08-01</span><span class="case-text">老板临时催单</span></div>
+        <div class="case-row" data-text="老板要求提前出货"><span class="case-code">08-02</span><span class="case-text">老板要求提前出货</span></div>
+        <div class="case-row" data-text="老板要求降低成本"><span class="case-code">08-03</span><span class="case-text">老板要求降低成本</span></div>
+        <div class="case-row" data-text="老板要求压低报价"><span class="case-code">08-04</span><span class="case-text">老板要求压低报价</span></div>
+        <div class="case-row" data-text="老板要求接受低利润订单"><span class="case-code">08-05</span><span class="case-text">老板要求接受低利润订单</span></div>
+        <div class="case-row" data-text="老板要求先出货再补资料"><span class="case-code">08-06</span><span class="case-text">老板要求“先出货再补资料”</span></div>
+        <div class="case-row" data-text="老板要求按以前方式申报"><span class="case-code">08-07</span><span class="case-text">老板要求按以前方式申报</span></div>
+        <div class="case-row" data-text="老板要求处理历史遗留问题"><span class="case-code">08-08</span><span class="case-text">老板要求处理历史遗留问题</span></div>
+        <div class="case-row" data-text="老板要求承担不合理责任"><span class="case-code">08-09</span><span class="case-text">老板要求承担不合理责任</span></div>
+        <div class="case-row" data-text="老板与客户承诺不一致"><span class="case-code">08-10</span><span class="case-text">老板与客户承诺不一致</span></div>
+
+        <div class="case-row" data-text="业务员临时催报关"><span class="case-code">08-11</span><span class="case-text">业务员临时催报关</span></div>
+        <div class="case-row" data-text="业务员提供资料不完整"><span class="case-code">08-12</span><span class="case-text">业务员提供资料不完整</span></div>
+        <div class="case-row" data-text="业务员提供错误资料"><span class="case-code">08-13</span><span class="case-text">业务员提供错误资料</span></div>
+        <div class="case-row" data-text="业务员隐瞒产品信息"><span class="case-code">08-14</span><span class="case-text">业务员隐瞒产品信息</span></div>
+        <div class="case-row" data-text="业务员要求修改申报信息"><span class="case-code">08-15</span><span class="case-text">业务员要求修改申报信息</span></div>
+        <div class="case-row" data-text="业务员要求低报"><span class="case-code">08-16</span><span class="case-text">业务员要求低报</span></div>
+        <div class="case-row" data-text="业务员要求高报"><span class="case-code">08-17</span><span class="case-text">业务员要求高报</span></div>
+        <div class="case-row" data-text="业务员指定HS编码"><span class="case-code">08-18</span><span class="case-text">业务员指定HS编码</span></div>
+        <div class="case-row" data-text="业务员与关务意见冲突"><span class="case-code">08-19</span><span class="case-text">业务员与关务意见冲突</span></div>
+        <div class="case-row" data-text="业务员承诺客户无法实现的条件"><span class="case-code">08-20</span><span class="case-text">业务员承诺客户无法实现的条件</span></div>
+
+        <div class="case-row" data-text="客户临时催货"><span class="case-code">08-21</span><span class="case-text">客户临时催货</span></div>
+        <div class="case-row" data-text="客户临时改订单"><span class="case-code">08-22</span><span class="case-text">客户临时改订单</span></div>
+        <div class="case-row" data-text="客户要求降价"><span class="case-code">08-23</span><span class="case-text">客户要求降价</span></div>
+        <div class="case-row" data-text="客户要求延迟付款"><span class="case-code">08-24</span><span class="case-text">客户要求延迟付款</span></div>
+        <div class="case-row" data-text="客户要求特殊付款方式"><span class="case-code">08-25</span><span class="case-text">客户要求特殊付款方式</span></div>
+        <div class="case-row" data-text="客户要求低报"><span class="case-code">08-26</span><span class="case-text">客户要求低报</span></div>
+        <div class="case-row" data-text="客户要求修改品名"><span class="case-code">08-27</span><span class="case-text">客户要求修改品名</span></div>
+        <div class="case-row" data-text="客户要求修改原产地"><span class="case-code">08-28</span><span class="case-text">客户要求修改原产地</span></div>
+        <div class="case-row" data-text="客户要求提供特殊单证"><span class="case-code">08-29</span><span class="case-text">客户要求提供特殊单证</span></div>
+        <div class="case-row" data-text="客户投诉产品质量"><span class="case-code">08-30</span><span class="case-text">客户投诉产品质量</span></div>
+
+        <div class="case-row" data-text="客户投诉交货延误"><span class="case-code">08-31</span><span class="case-text">客户投诉交货延误</span></div>
+        <div class="case-row" data-text="客户要求索赔"><span class="case-code">08-32</span><span class="case-text">客户要求索赔</span></div>
+        <div class="case-row" data-text="客户拒绝承担额外费用"><span class="case-code">08-33</span><span class="case-text">客户拒绝承担额外费用</span></div>
+        <div class="case-row" data-text="客户目的港无法清关"><span class="case-code">08-34</span><span class="case-text">客户目的港无法清关</span></div>
+        <div class="case-row" data-text="货代临时催资料"><span class="case-code">08-35</span><span class="case-text">货代临时催资料</span></div>
+        <div class="case-row" data-text="货代提供错误信息"><span class="case-code">08-36</span><span class="case-text">货代提供错误信息</span></div>
+        <div class="case-row" data-text="货代与公司责任争议"><span class="case-code">08-37</span><span class="case-text">货代与公司责任争议</span></div>
+        <div class="case-row" data-text="货代与报关行互相甩锅"><span class="case-code">08-38</span><span class="case-text">货代与报关行互相甩锅</span></div>
+        <div class="case-row" data-text="货代临时涨价"><span class="case-code">08-39</span><span class="case-text">货代临时涨价</span></div>
+        <div class="case-row" data-text="货代订舱错误"><span class="case-code">08-40</span><span class="case-text">货代订舱错误</span></div>
+
+        <div class="case-row" data-text="报关行要求补充资料"><span class="case-code">08-41</span><span class="case-text">报关行要求补充资料</span></div>
+        <div class="case-row" data-text="报关行发现申报错误"><span class="case-code">08-42</span><span class="case-text">报关行发现申报错误</span></div>
+        <div class="case-row" data-text="报关行与业务员意见冲突"><span class="case-code">08-43</span><span class="case-text">报关行与业务员意见冲突</span></div>
+        <div class="case-row" data-text="报关行与海关沟通异常"><span class="case-code">08-44</span><span class="case-text">报关行与海关沟通异常</span></div>
+        <div class="case-row" data-text="仓库与业务部门信息不一致"><span class="case-code">08-45</span><span class="case-text">仓库与业务部门信息不一致</span></div>
+        <div class="case-row" data-text="仓库装货数量错误"><span class="case-code">08-46</span><span class="case-text">仓库装货数量错误</span></div>
+        <div class="case-row" data-text="仓库无法按时装货"><span class="case-code">08-47</span><span class="case-text">仓库无法按时装货</span></div>
+        <div class="case-row" data-text="采购与供应商发生交期冲突"><span class="case-code">08-48</span><span class="case-text">采购与供应商发生交期冲突</span></div>
+        <div class="case-row" data-text="采购与业务员信息不一致"><span class="case-code">08-49</span><span class="case-text">采购与业务员信息不一致</span></div>
+        <div class="case-row" data-text="财务与业务部门付款冲突"><span class="case-code">08-50</span><span class="case-text">财务与业务部门付款冲突</span></div>
+
+        <div class="case-row" data-text="财务与关务税费数据冲突"><span class="case-code">08-51</span><span class="case-text">财务与关务税费数据冲突</span></div>
+        <div class="case-row" data-text="公司内部部门互相甩锅"><span class="case-code">08-52</span><span class="case-text">公司内部部门互相甩锅</span></div>
+        <div class="case-row" data-text="新人被要求独立处理异常"><span class="case-code">08-53</span><span class="case-text">新人被要求独立处理异常</span></div>
+        <div class="case-row" data-text="新人不知道向谁汇报"><span class="case-code">08-54</span><span class="case-text">新人不知道向谁汇报</span></div>
+        <div class="case-row" data-text="新人发现同事操作存在风险"><span class="case-code">08-55</span><span class="case-text">新人发现同事操作存在风险</span></div>
+        <div class="case-row" data-text="新人发现历史申报错误"><span class="case-code">08-56</span><span class="case-text">新人发现历史申报错误</span></div>
+        <div class="case-row" data-text="新人被要求背锅"><span class="case-code">08-57</span><span class="case-text">新人被要求背锅</span></div>
+        <div class="case-row" data-text="新人面对多部门同时催促"><span class="case-code">08-58</span><span class="case-text">新人面对多部门同时催促</span></div>
+        <div class="case-row" data-text="新人处理客户与公司利益冲突"><span class="case-code">08-59</span><span class="case-text">新人处理客户与公司利益冲突</span></div>
+        <div class="case-row" data-text="新人处理合规与业绩冲突"><span class="case-code">08-60</span><span class="case-text">新人处理合规与业绩冲突</span></div>
+
+        <div class="case-row" data-text="新人面对老板与海关意见冲突"><span class="case-code">08-61</span><span class="case-text">新人面对老板与海关意见冲突</span></div>
+        <div class="case-row" data-text="新人面对客户与公司规定冲突"><span class="case-code">08-62</span><span class="case-text">新人面对客户与公司规定冲突</span></div>
+        <div class="case-row" data-text="新人面对业务员与客户承诺冲突"><span class="case-code">08-63</span><span class="case-text">新人面对业务员与客户承诺冲突</span></div>
+        <div class="case-row" data-text="新人处理跨部门责任划分"><span class="case-code">08-64</span><span class="case-text">新人处理跨部门责任划分</span></div>
+        <div class="case-row" data-text="新人如何留下工作证据"><span class="case-code">08-65</span><span class="case-text">新人如何留下工作证据</span></div>
+        <div class="case-row" data-text="新人如何向领导汇报风险"><span class="case-code">08-66</span><span class="case-text">新人如何向领导汇报风险</span></div>
+        <div class="case-row" data-text="新人如何拒绝不合理要求"><span class="case-code">08-67</span><span class="case-text">新人如何拒绝不合理要求</span></div>
+        <div class="case-row" data-text="新人如何与强势业务员沟通"><span class="case-code">08-68</span><span class="case-text">新人如何与强势业务员沟通</span></div>
+        <div class="case-row" data-text="新人如何处理高压多方催促"><span class="case-code">08-69</span><span class="case-text">新人如何处理高压多方催促</span></div>
+        <div class="case-row" data-text="老板+业务员+货代+客户多方施压"><span class="case-code">08-70</span><span class="case-text">老板+业务员+货代+客户多方施压</span></div>
+
+    </div>
+</div>
+
+
+<!-- =========================================================
+     09 行业灰色地带
+========================================================= -->
+
+<div class="category-card" id="cat09">
+
+    <div class="category-head">
+        <div class="category-head-left">
+            <span class="category-number">09</span>
+            <span class="category-title">行业灰色地带</span>
+        </div>
+        <span class="category-count">70 个案例</span>
+    </div>
+
+    <div class="case-list">
+
+        <div class="case-row" data-text="低报价格的诱因与风险"><span class="case-code">09-01</span><span class="case-text">低报价格的诱因与风险</span></div>
+        <div class="case-row" data-text="高报价格的诱因与风险"><span class="case-code">09-02</span><span class="case-text">高报价格的诱因与风险</span></div>
+        <div class="case-row" data-text="虚报商品名称"><span class="case-code">09-03</span><span class="case-text">虚报商品名称</span></div>
+        <div class="case-row" data-text="虚报商品规格"><span class="case-code">09-04</span><span class="case-text">虚报商品规格</span></div>
+        <div class="case-row" data-text="虚报商品数量"><span class="case-code">09-05</span><span class="case-text">虚报商品数量</span></div>
+        <div class="case-row" data-text="虚报商品重量"><span class="case-code">09-06</span><span class="case-text">虚报商品重量</span></div>
+        <div class="case-row" data-text="错报HS编码"><span class="case-code">09-07</span><span class="case-text">错报HS编码</span></div>
+        <div class="case-row" data-text="故意选择低税率HS编码"><span class="case-code">09-08</span><span class="case-text">故意选择低税率HS编码</span></div>
+        <div class="case-row" data-text="故意拆分商品归类"><span class="case-code">09-09</span><span class="case-text">故意拆分商品归类</span></div>
+        <div class="case-row" data-text="故意合并商品归类"><span class="case-code">09-10</span><span class="case-text">故意合并商品归类</span></div>
+        <div class="case-row" data-text="低报成交价格"><span class="case-code">09-11</span><span class="case-text">低报成交价格</span></div>
+        <div class="case-row" data-text="高报成交价格"><span class="case-code">09-12</span><span class="case-text">高报成交价格</span></div>
+        <div class="case-row" data-text="低报运费"><span class="case-code">09-13</span><span class="case-text">低报运费</span></div>
+        <div class="case-row" data-text="隐瞒保险费用"><span class="case-code">09-14</span><span class="case-text">隐瞒保险费用</span></div>
+        <div class="case-row" data-text="隐瞒佣金费用"><span class="case-code">09-15</span><span class="case-text">隐瞒佣金费用</span></div>
+        <div class="case-row" data-text="隐瞒特许权使用费"><span class="case-code">09-16</span><span class="case-text">隐瞒特许权使用费</span></div>
+        <div class="case-row" data-text="虚构交易价格"><span class="case-code">09-17</span><span class="case-text">虚构交易价格</span></div>
+        <div class="case-row" data-text="关联企业价格异常"><span class="case-code">09-18</span><span class="case-text">关联企业价格异常</span></div>
+        <div class="case-row" data-text="价格资料造假"><span class="case-code">09-19</span><span class="case-text">价格资料造假</span></div>
+        <div class="case-row" data-text="提供虚假商业发票"><span class="case-code">09-20</span><span class="case-text">提供虚假商业发票</span></div>
+        <div class="case-row" data-text="提供虚假装箱单"><span class="case-code">09-21</span><span class="case-text">提供虚假装箱单</span></div>
+        <div class="case-row" data-text="提供虚假合同"><span class="case-code">09-22</span><span class="case-text">提供虚假合同</span></div>
+        <div class="case-row" data-text="修改商业发票金额"><span class="case-code">09-23</span><span class="case-text">修改商业发票金额</span></div>
+        <div class="case-row" data-text="修改装箱单数量"><span class="case-code">09-24</span><span class="case-text">修改装箱单数量</span></div>
+        <div class="case-row" data-text="修改产品品名"><span class="case-code">09-25</span><span class="case-text">修改产品品名</span></div>
+        <div class="case-row" data-text="修改产品型号"><span class="case-code">09-26</span><span class="case-text">修改产品型号</span></div>
+        <div class="case-row" data-text="修改产品规格"><span class="case-code">09-27</span><span class="case-text">修改产品规格</span></div>
+        <div class="case-row" data-text="虚假原产地申报"><span class="case-code">09-28</span><span class="case-text">虚假原产地申报</span></div>
+        <div class="case-row" data-text="冒用原产地证明"><span class="case-code">09-29</span><span class="case-text">冒用原产地证明</span></div>
+        <div class="case-row" data-text="虚假原产地证书"><span class="case-code">09-30</span><span class="case-text">虚假原产地证书</span></div>
+        <div class="case-row" data-text="利用第三国转口规避关税"><span class="case-code">09-31</span><span class="case-text">利用第三国转口规避关税</span></div>
+        <div class="case-row" data-text="利用简单加工制造原产地假象"><span class="case-code">09-32</span><span class="case-text">利用简单加工制造原产地假象</span></div>
+        <div class="case-row" data-text="利用OEM模式规避贸易措施"><span class="case-code">09-33</span><span class="case-text">利用OEM模式规避贸易措施</span></div>
+        <div class="case-row" data-text="利用多国供应链规避监管"><span class="case-code">09-34</span><span class="case-text">利用多国供应链规避监管</span></div>
+        <div class="case-row" data-text="拆分订单规避监管"><span class="case-code">09-35</span><span class="case-text">拆分订单规避监管</span></div>
+        <div class="case-row" data-text="拆分货物规避监管"><span class="case-code">09-36</span><span class="case-text">拆分货物规避监管</span></div>
+        <div class="case-row" data-text="故意分批申报"><span class="case-code">09-37</span><span class="case-text">故意分批申报</span></div>
+        <div class="case-row" data-text="虚构贸易方式"><span class="case-code">09-38</span><span class="case-text">虚构贸易方式</span></div>
+        <div class="case-row" data-text="错报监管方式"><span class="case-code">09-39</span><span class="case-text">错报监管方式</span></div>
+        <div class="case-row" data-text="借用其他企业名义进出口"><span class="case-code">09-40</span><span class="case-text">借用其他企业名义进出口</span></div>
+        <div class="case-row" data-text="买单出口风险"><span class="case-code">09-41</span><span class="case-text">买单出口风险</span></div>
+        <div class="case-row" data-text="借用报关单证"><span class="case-code">09-42</span><span class="case-text">借用报关单证</span></div>
+        <div class="case-row" data-text="虚假贸易背景"><span class="case-code">09-43</span><span class="case-text">虚假贸易背景</span></div>
+        <div class="case-row" data-text="空壳贸易公司风险"><span class="case-code">09-44</span><span class="case-text">空壳贸易公司风险</span></div>
+        <div class="case-row" data-text="供应商要求违规申报"><span class="case-code">09-45</span><span class="case-text">供应商要求违规申报</span></div>
+        <div class="case-row" data-text="货代建议违规操作"><span class="case-code">09-46</span><span class="case-text">货代建议违规操作</span></div>
+        <div class="case-row" data-text="报关行建议违规操作"><span class="case-code">09-47</span><span class="case-text">报关行建议违规操作</span></div>
+        <div class="case-row" data-text="客户要求违规操作"><span class="case-code">09-48</span><span class="case-text">客户要求违规操作</span></div>
+        <div class="case-row" data-text="业务员要求违规操作"><span class="case-code">09-49</span><span class="case-text">业务员要求违规操作</span></div>
+        <div class="case-row" data-text="老板要求违规操作"><span class="case-code">09-50</span><span class="case-text">老板要求违规操作</span></div>
+        <div class="case-row" data-text="同行都这么做的风险"><span class="case-code">09-51</span><span class="case-text">“同行都这么做”的风险</span></div>
+        <div class="case-row" data-text="以前一直这么报的风险"><span class="case-code">09-52</span><span class="case-text">“以前一直这么报”的风险</span></div>
+        <div class="case-row" data-text="海关查不到的错误认知"><span class="case-code">09-53</span><span class="case-text">“海关查不到”的错误认知</span></div>
+        <div class="case-row" data-text="小金额没关系的错误认知"><span class="case-code">09-54</span><span class="case-text">“小金额没关系”的错误认知</span></div>
+        <div class="case-row" data-text="客户承担风险的错误认知"><span class="case-code">09-55</span><span class="case-text">“客户承担风险”的错误认知</span></div>
+        <div class="case-row" data-text="违规操作被海关查验"><span class="case-code">09-56</span><span class="case-text">违规操作被海关查验</span></div>
+        <div class="case-row" data-text="违规操作被要求补税"><span class="case-code">09-57</span><span class="case-text">违规操作被要求补税</span></div>
+        <div class="case-row" data-text="违规操作引发行政处罚"><span class="case-code">09-58</span><span class="case-text">违规操作引发行政处罚</span></div>
+        <div class="case-row" data-text="企业内部责任追究"><span class="case-code">09-59</span><span class="case-text">企业内部责任追究</span></div>
+        <div class="case-row" data-text="员工个人责任风险"><span class="case-code">09-60</span><span class="case-text">员工个人责任风险</span></div>
+        <div class="case-row" data-text="历史违规申报主动纠错"><span class="case-code">09-61</span><span class="case-text">历史违规申报主动纠错</span></div>
+        <div class="case-row" data-text="发现同事违规操作怎么办"><span class="case-code">09-62</span><span class="case-text">发现同事违规操作怎么办</span></div>
+        <div class="case-row" data-text="发现公司长期违规怎么办"><span class="case-code">09-63</span><span class="case-text">发现公司长期违规怎么办</span></div>
+        <div class="case-row" data-text="如何拒绝老板的违规要求"><span class="case-code">09-64</span><span class="case-text">如何拒绝老板的违规要求</span></div>
+        <div class="case-row" data-text="如何拒绝客户的违规要求"><span class="case-code">09-65</span><span class="case-text">如何拒绝客户的违规要求</span></div>
+        <div class="case-row" data-text="合规操作与业务利益冲突"><span class="case-code">09-66</span><span class="case-text">合规操作与业务利益冲突</span></div>
+        <div class="case-row" data-text="合法税务筹划与违规避税区别"><span class="case-code">09-67</span><span class="case-text">合法税务筹划与违规避税区别</span></div>
+        <div class="case-row" data-text="合法降低贸易成本的方法"><span class="case-code">09-68</span><span class="case-text">合法降低贸易成本的方法</span></div>
+        <div class="case-row" data-text="灰色操作风险识别综合案例"><span class="case-code">09-69</span><span class="case-text">灰色操作风险识别综合案例</span></div>
+        <div class="case-row" data-text="外贸关务合规与灰色地带综合实战"><span class="case-code">09-70</span><span class="case-text">外贸关务合规与灰色地带综合实战</span></div>
+
+    </div>
+</div>
+
+
+<!-- =========================================================
+     10 综合实战
+========================================================= -->
+
+<div class="category-card" id="cat10">
+
+    <div class="category-head">
+        <div class="category-head-left">
+            <span class="category-number">10</span>
+            <span class="category-title">综合实战</span>
+        </div>
+        <span class="category-count">75 个案例</span>
+    </div>
+
+    <div class="case-list">
+
+        <div class="case-row" data-text="客户询盘→报价→成交"><span class="case-code">10-01</span><span class="case-text">客户询盘→报价→成交</span></div>
+        <div class="case-row" data-text="客户询盘→产品确认→报价"><span class="case-code">10-02</span><span class="case-text">客户询盘→产品确认→报价</span></div>
+        <div class="case-row" data-text="报价→谈判→订单确认"><span class="case-code">10-03</span><span class="case-text">报价→谈判→订单确认</span></div>
+        <div class="case-row" data-text="订单→合同→PI→收款"><span class="case-code">10-04</span><span class="case-text">订单→合同→PI→收款</span></div>
+        <div class="case-row" data-text="订单→采购→生产→出货"><span class="case-code">10-05</span><span class="case-text">订单→采购→生产→出货</span></div>
+        <div class="case-row" data-text="订单→验货→装柜→出口"><span class="case-code">10-06</span><span class="case-text">订单→验货→装柜→出口</span></div>
+        <div class="case-row" data-text="采购→生产→报关→装船"><span class="case-code">10-07</span><span class="case-text">采购→生产→报关→装船</span></div>
+        <div class="case-row" data-text="生产→包装→仓储→出货"><span class="case-code">10-08</span><span class="case-text">生产→包装→仓储→出货</span></div>
+        <div class="case-row" data-text="订舱→拖车→装柜→报关"><span class="case-code">10-09</span><span class="case-text">订舱→拖车→装柜→报关</span></div>
+        <div class="case-row" data-text="报关→查验→放行→装船"><span class="case-code">10-10</span><span class="case-text">报关→查验→放行→装船</span></div>
+        <div class="case-row" data-text="出口全流程模拟"><span class="case-code">10-11</span><span class="case-text">出口全流程模拟</span></div>
+        <div class="case-row" data-text="进口全流程模拟"><span class="case-code">10-12</span><span class="case-text">进口全流程模拟</span></div>
+        <div class="case-row" data-text="FOB出口全流程"><span class="case-code">10-13</span><span class="case-text">FOB出口全流程</span></div>
+        <div class="case-row" data-text="CIF出口全流程"><span class="case-code">10-14</span><span class="case-text">CIF出口全流程</span></div>
+        <div class="case-row" data-text="CFR出口全流程"><span class="case-code">10-15</span><span class="case-text">CFR出口全流程</span></div>
+        <div class="case-row" data-text="EXW出口全流程"><span class="case-code">10-16</span><span class="case-text">EXW出口全流程</span></div>
+        <div class="case-row" data-text="FCA出口全流程"><span class="case-code">10-17</span><span class="case-text">FCA出口全流程</span></div>
+        <div class="case-row" data-text="DAP出口全流程"><span class="case-code">10-18</span><span class="case-text">DAP出口全流程</span></div>
+        <div class="case-row" data-text="DDP出口全流程"><span class="case-code">10-19</span><span class="case-text">DDP出口全流程</span></div>
+        <div class="case-row" data-text="信用证出口全流程"><span class="case-code">10-20</span><span class="case-text">信用证出口全流程</span></div>
+        <div class="case-row" data-text="T/T出口全流程"><span class="case-code">10-21</span><span class="case-text">T/T出口全流程</span></div>
+        <div class="case-row" data-text="赊账出口全流程"><span class="case-code">10-22</span><span class="case-text">赊账出口全流程</span></div>
+        <div class="case-row" data-text="新客户首次订单"><span class="case-code">10-23</span><span class="case-text">新客户首次订单</span></div>
+        <div class="case-row" data-text="老客户大额订单"><span class="case-code">10-24</span><span class="case-text">老客户大额订单</span></div>
+        <div class="case-row" data-text="新产品首次出口"><span class="case-code">10-25</span><span class="case-text">新产品首次出口</span></div>
+        <div class="case-row" data-text="多SKU订单出口"><span class="case-code">10-26</span><span class="case-text">多SKU订单出口</span></div>
+        <div class="case-row" data-text="多供应商订单出口"><span class="case-code">10-27</span><span class="case-text">多供应商订单出口</span></div>
+        <div class="case-row" data-text="多批次订单出口"><span class="case-code">10-28</span><span class="case-text">多批次订单出口</span></div>
+        <div class="case-row" data-text="紧急订单出口"><span class="case-code">10-29</span><span class="case-text">紧急订单出口</span></div>
+        <div class="case-row" data-text="大额订单出口"><span class="case-code">10-30</span><span class="case-text">大额订单出口</span></div>
+        <div class="case-row" data-text="低利润订单处理"><span class="case-code">10-31</span><span class="case-text">低利润订单处理</span></div>
+        <div class="case-row" data-text="客户压价订单处理"><span class="case-code">10-32</span><span class="case-text">客户压价订单处理</span></div>
+        <div class="case-row" data-text="客户临时修改订单"><span class="case-code">10-33</span><span class="case-text">客户临时修改订单</span></div>
+        <div class="case-row" data-text="客户临时取消订单"><span class="case-code">10-34</span><span class="case-text">客户临时取消订单</span></div>
+        <div class="case-row" data-text="供应商交期延误"><span class="case-code">10-35</span><span class="case-text">供应商交期延误</span></div>
+        <div class="case-row" data-text="产品质量出现问题"><span class="case-code">10-36</span><span class="case-text">产品质量出现问题</span></div>
+        <div class="case-row" data-text="产品与客户要求不符"><span class="case-code">10-37</span><span class="case-text">产品与客户要求不符</span></div>
+        <div class="case-row" data-text="装柜发现数量错误"><span class="case-code">10-38</span><span class="case-text">装柜发现数量错误</span></div>
+        <div class="case-row" data-text="单证发现数据错误"><span class="case-code">10-39</span><span class="case-text">单证发现数据错误</span></div>
+        <div class="case-row" data-text="报关发现HS编码问题"><span class="case-code">10-40</span><span class="case-text">报关发现HS编码问题</span></div>
+        <div class="case-row" data-text="报关发现申报要素问题"><span class="case-code">10-41</span><span class="case-text">报关发现申报要素问题</span></div>
+        <div class="case-row" data-text="海关查验综合处理"><span class="case-code">10-42</span><span class="case-text">海关查验综合处理</span></div>
+        <div class="case-row" data-text="海关质疑申报价格"><span class="case-code">10-43</span><span class="case-text">海关质疑申报价格</span></div>
+        <div class="case-row" data-text="海关质疑原产地"><span class="case-code">10-44</span><span class="case-text">海关质疑原产地</span></div>
+        <div class="case-row" data-text="海关退单综合处理"><span class="case-code">10-45</span><span class="case-text">海关退单综合处理</span></div>
+        <div class="case-row" data-text="船期临近的紧急出货"><span class="case-code">10-46</span><span class="case-text">船期临近的紧急出货</span></div>
+        <div class="case-row" data-text="船期延误综合处理"><span class="case-code">10-47</span><span class="case-text">船期延误综合处理</span></div>
+        <div class="case-row" data-text="货代与报关行发生冲突"><span class="case-code">10-48</span><span class="case-text">货代与报关行发生冲突</span></div>
+        <div class="case-row" data-text="业务员与关务发生冲突"><span class="case-code">10-49</span><span class="case-text">业务员与关务发生冲突</span></div>
+        <div class="case-row" data-text="客户与供应商发生冲突"><span class="case-code">10-50</span><span class="case-text">客户与供应商发生冲突</span></div>
+        <div class="case-row" data-text="客户目的港无法清关"><span class="case-code">10-51</span><span class="case-text">客户目的港无法清关</span></div>
+        <div class="case-row" data-text="客户拒绝提货"><span class="case-code">10-52</span><span class="case-text">客户拒绝提货</span></div>
+        <div class="case-row" data-text="客户提出质量索赔"><span class="case-code">10-53</span><span class="case-text">客户提出质量索赔</span></div>
+        <div class="case-row" data-text="客户提出延误索赔"><span class="case-code">10-54</span><span class="case-text">客户提出延误索赔</span></div>
+        <div class="case-row" data-text="货物运输途中损坏"><span class="case-code">10-55</span><span class="case-text">货物运输途中损坏</span></div>
+        <div class="case-row" data-text="货物运输途中丢失"><span class="case-code">10-56</span><span class="case-text">货物运输途中丢失</span></div>
+        <div class="case-row" data-text="收款异常与订单风险"><span class="case-code">10-57</span><span class="case-text">收款异常与订单风险</span></div>
+        <div class="case-row" data-text="出口退税异常"><span class="case-code">10-58</span><span class="case-text">出口退税异常</span></div>
+        <div class="case-row" data-text="历史报关错误被发现"><span class="case-code">10-59</span><span class="case-text">历史报关错误被发现</span></div>
+        <div class="case-row" data-text="历史订单合规风险"><span class="case-code">10-60</span><span class="case-text">历史订单合规风险</span></div>
+        <div class="case-row" data-text="多部门同时出现问题"><span class="case-code">10-61</span><span class="case-text">多部门同时出现问题</span></div>
+        <div class="case-row" data-text="老板+业务员+货代三方施压"><span class="case-code">10-62</span><span class="case-text">老板+业务员+货代三方施压</span></div>
+        <div class="case-row" data-text="客户+业务员+关务三方冲突"><span class="case-code">10-63</span><span class="case-text">客户+业务员+关务三方冲突</span></div>
+        <div class="case-row" data-text="海关+船期+客户三重压力"><span class="case-code">10-64</span><span class="case-text">海关+船期+客户三重压力</span></div>
+        <div class="case-row" data-text="订单利润与合规发生冲突"><span class="case-code">10-65</span><span class="case-text">订单利润与合规发生冲突</span></div>
+        <div class="case-row" data-text="订单成本突然失控"><span class="case-code">10-66</span><span class="case-text">订单成本突然失控</span></div>
+        <div class="case-row" data-text="订单即将亏损的处理"><span class="case-code">10-67</span><span class="case-text">订单即将亏损的处理</span></div>
+        <div class="case-row" data-text="大额订单重大异常处理"><span class="case-code">10-68</span><span class="case-text">大额订单重大异常处理</span></div>
+        <div class="case-row" data-text="外贸订单危机综合实战"><span class="case-code">10-69</span><span class="case-text">外贸订单危机综合实战</span></div>
+        <div class="case-row" data-text="从询盘到收款完整实战"><span class="case-code">10-70</span><span class="case-text">从询盘到收款完整实战</span></div>
+        <div class="case-row" data-text="从询盘到出口退税完整实战"><span class="case-code">10-71</span><span class="case-text">从询盘到出口退税完整实战</span></div>
+        <div class="case-row" data-text="从客户下单到目的港清关完整实战"><span class="case-code">10-72</span><span class="case-text">从客户下单到目的港清关完整实战</span></div>
+        <div class="case-row" data-text="外贸+关务+物流综合实战"><span class="case-code">10-73</span><span class="case-text">外贸+关务+物流综合实战</span></div>
+        <div class="case-row" data-text="多部门协同综合实战"><span class="case-code">10-74</span><span class="case-text">多部门协同综合实战</span></div>
+        <div class="case-row" data-text="外贸全流程高压地狱模式"><span class="case-code">10-75</span><span class="case-text">外贸全流程高压地狱模式</span></div>
+
+    </div>
+</div>
+
+
+    </div>
+</div>
+
+
+<!-- =========================
+     鼠标跟随提示框
+========================= -->
+
+<div id="hover-preview"></div>
+
+<!-- =========================
+     复制成功提示
+========================= -->
+
+<div class="copy-toast" id="copy-toast">
+    已复制
+</div>
+
+
+<script>
+
+/* =========================================================
+   鼠标跟随文字提示
+========================================================= */
+
+const preview = document.getElementById("hover-preview");
+
+document.querySelectorAll(".case-row").forEach(row => {
+
+    row.addEventListener("mouseenter", function(){
+
+        const category =
+            this.closest(".category-card")
+                .querySelector(".category-title")
+                .innerText;
+
+        const text = this.dataset.text;
+
+        /*
+           鼠标悬停时显示完整内容
+        */
+
+        preview.innerText =
+            category + "的" + text + "案例";
+
+        preview.style.display = "block";
+
+    });
+
+    row.addEventListener("mousemove", function(e){
+
+        /*
+           提示框跟随鼠标移动
+        */
+
+        let x = e.clientX + 18;
+        let y = e.clientY + 18;
+
+        const width = preview.offsetWidth;
+        const height = preview.offsetHeight;
+
+        /*
+           防止提示框跑出屏幕右侧
+        */
+
+        if(x + width > window.innerWidth - 10){
+            x = e.clientX - width - 18;
+        }
+
+        /*
+           防止提示框跑出屏幕底部
+        */
+
+        if(y + height > window.innerHeight - 10){
+            y = e.clientY - height - 18;
+        }
+
+        preview.style.left = x + "px";
+        preview.style.top = y + "px";
+
+    });
+
+    row.addEventListener("mouseleave", function(){
+
+        preview.style.display = "none";
+
+    });
+
+});
+
+
+/* =========================================================
+   点击复制
+========================================================= */
+
+const toast = document.getElementById("copy-toast");
+
+document.querySelectorAll(".case-row").forEach(row => {
+
+    row.addEventListener("click", async function(){
+
+        const category =
+            this.closest(".category-card")
+                .querySelector(".category-title")
+                .innerText;
+
+        const text = this.dataset.text;
+
+        /*
+           最终复制格式：
+
+           进出口报关的一般贸易出口报关案例
+        */
+
+        const copyText =
+            category + "的" + text + "案例";
+
+        try{
+
+            await navigator.clipboard.writeText(copyText);
+
+        }catch(error){
+
+            /*
+               某些本地HTML环境下
+               Clipboard API可能被浏览器限制
+            */
+
+            const textarea =
+                document.createElement("textarea");
+
+            textarea.value = copyText;
+
+            textarea.style.position = "fixed";
+            textarea.style.left = "-9999px";
+
+            document.body.appendChild(textarea);
+
+            textarea.select();
+
+            document.execCommand("copy");
+
+            textarea.remove();
+
+        }
+
+        /*
+           显示复制成功提示
+        */
+
+        toast.innerText =
+            "已复制： " + copyText;
+
+        toast.classList.add("show");
+
+        clearTimeout(window.copyTimer);
+
+        window.copyTimer =
+            setTimeout(function(){
+
+                toast.classList.remove("show");
+
+            },1800);
+
+    });
+
+});
+
+
+/* =========================================================
+   点击顶部导航后：
+   稍微延迟一下，让锚点滚动更稳定
+========================================================= */
+
+document.querySelectorAll(".nav-item").forEach(link => {
+
+    link.addEventListener("click", function(){
+
+        const target =
+            document.querySelector(
+                this.getAttribute("href")
+            );
+
+        if(target){
+
+            setTimeout(() => {
+
+                target.scrollIntoView({
+                    behavior:"smooth",
+                    block:"start"
+                });
+
+            },20);
+
+        }
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>外贸法律纠纷案例知识库</title>
+
+<style>
+
+/* =========================================================
+   全局
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 150px;
+}
+
+body {
+    margin: 0;
+    background: #eeeeee;
+    color: #151515;
+    font-family:
+        "Microsoft YaHei",
+        "PingFang SC",
+        "Noto Sans SC",
+        Arial,
+        sans-serif;
+}
+
+
+/* =========================================================
+   顶部导航
+========================================================= */
+
+.topbar {
+
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    top: 0;
+
+    height: 125px;
+
+    background: rgba(255,255,255,.97);
+
+    border-bottom: 1px solid #d6d6d6;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,.10);
+
+    z-index: 9999;
+}
+
+
+/* =========================================================
+   顶部标题
+========================================================= */
+
+.top-title {
+
+    height: 43px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 25px;
+
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.top-title strong {
+
+    font-size: 16px;
+
+    font-weight: 900;
+}
+
+.top-title span {
+
+    margin-left: 12px;
+
+    color: #999;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   大类导航
+========================================================= */
+
+.category-bar {
+
+    height: 82px;
+
+    padding: 9px 18px;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-content: flex-start;
+
+    gap: 6px;
+
+    overflow: visible;
+}
+
+
+/* =========================================================
+   大类导航按钮
+========================================================= */
+
+.category {
+
+    position: relative;
+
+    height: 28px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 13px;
+
+    background: #f6f6f6;
+
+    border: 1px solid #d5d5d5;
+
+    border-radius: 5px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    transition:
+        .18s ease;
+}
+
+.category:hover {
+
+    background: #111;
+
+    color: white;
+
+    border-color: #111;
+}
+
+.category.active {
+
+    background: #111;
+
+    color: white;
+
+    border-color: #111;
+}
+
+
+/* =========================================================
+   下拉菜单
+========================================================= */
+
+.dropdown {
+
+    position: fixed;
+
+    top: 125px;
+
+    left: 18px;
+
+    right: 18px;
+
+    max-height: 400px;
+
+    padding: 16px 18px;
+
+    background: white;
+
+    border: 1px solid #cccccc;
+
+    border-top: 3px solid #111;
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.18);
+
+    display: none;
+
+    z-index: 9998;
+
+    overflow-y: auto;
+}
+
+.dropdown.show {
+    display: block;
+}
+
+
+/* =========================================================
+   下拉菜单标题
+========================================================= */
+
+.dropdown-head {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+
+    padding-bottom: 9px;
+
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.dropdown-head strong {
+
+    font-size: 15px;
+
+    font-weight: 900;
+}
+
+.dropdown-head span {
+
+    color: #999;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   下拉案例
+========================================================= */
+
+.dropdown-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0,1fr));
+
+    gap: 8px;
+}
+
+
+/* =========================================================
+   下拉案例项目
+========================================================= */
+
+.dropdown-case {
+
+    padding: 9px 11px;
+
+    background: #f7f7f7;
+
+    border: 1px solid #dddddd;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    transition:
+        .15s ease;
+}
+
+.dropdown-case:hover {
+
+    background: #111;
+
+    color: white;
+
+    border-color: #111;
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* =========================================================
+   下拉案例标题
+========================================================= */
+
+.dropdown-case-title {
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    margin-bottom: 6px;
+}
+
+
+/* =========================================================
+   下拉小类
+========================================================= */
+
+.dropdown-small {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 4px;
+}
+
+.dropdown-small span {
+
+    padding: 3px 5px;
+
+    background: white;
+
+    color: #555;
+
+    border: 1px solid #dddddd;
+
+    border-radius: 3px;
+
+    font-size: 9px;
+
+    cursor: pointer;
+}
+
+.dropdown-small span:hover {
+
+    background: #111;
+
+    color: white;
+
+    border-color: #111;
+}
+
+
+/* =========================================================
+   主体
+========================================================= */
+
+.page {
+
+    width: 95vw;
+
+    max-width: 1800px;
+
+    margin: 0 auto;
+
+    padding-top: 150px;
+
+    padding-bottom: 60px;
+}
+
+
+/* =========================================================
+   页面头部
+========================================================= */
+
+.hero {
+
+    padding: 24px 28px;
+
+    margin-bottom: 18px;
+
+    background: white;
+
+    border: 1px solid #d8d8d8;
+
+    border-left:
+        5px solid #111;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,.05);
+}
+
+.hero h1 {
+
+    margin: 0 0 7px;
+
+    font-size: 29px;
+
+    font-weight: 900;
+}
+
+.hero p {
+
+    margin: 5px 0;
+
+    color: #777;
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   案例网格
+========================================================= */
+
+.case-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+    gap: 16px;
+}
+
+
+/* =========================================================
+   案例卡片
+========================================================= */
+
+.case-card {
+
+    position: relative;
+
+    padding: 20px 22px 22px;
+
+    background: white;
+
+    border: 1px solid #d8d8d8;
+
+    box-shadow:
+        0 5px 16px rgba(0,0,0,.05);
+
+    scroll-margin-top: 145px;
+
+    transition:
+        .2s ease;
+}
+
+.case-card:hover {
+
+    border-color: #aaa;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.09);
+}
+
+
+/* =========================================================
+   编号
+========================================================= */
+
+.case-no {
+
+    position: absolute;
+
+    right: 20px;
+
+    top: 18px;
+
+    color: #aaa;
+
+    font-size: 11px;
+
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   案例标题
+========================================================= */
+
+.case-title {
+
+    display: inline-block;
+
+    margin-bottom: 13px;
+
+    padding-bottom: 6px;
+
+    border-bottom:
+        3px solid #111;
+
+    font-size: 18px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   小类标题
+========================================================= */
+
+.case-label {
+
+    margin-bottom: 8px;
+
+    color: #999;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   小类
+========================================================= */
+
+.case-directions {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+}
+
+.direction {
+
+    padding: 7px 10px;
+
+    background: #f5f5f5;
+
+    border: 1px solid #d9d9d9;
+
+    border-radius: 4px;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    transition:
+        .15s ease;
+}
+
+.direction:hover {
+
+    background: #111;
+
+    color: white;
+
+    border-color: #111;
+
+    transform:
+        translateY(-1px);
+}
+
+.direction.copied {
+
+    background: #111;
+
+    color: white;
+}
+
+
+/* =========================================================
+   Tooltip
+========================================================= */
+
+.tooltip {
+
+    position: fixed;
+
+    display: none;
+
+    max-width: 450px;
+
+    padding: 11px 15px;
+
+    background: #050505;
+
+    color: white;
+
+    border-radius: 5px;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.35);
+
+    pointer-events: none;
+
+    z-index: 100000;
+}
+
+
+/* =========================================================
+   Toast
+========================================================= */
+
+.toast {
+
+    position: fixed;
+
+    left: 50%;
+
+    bottom: 30px;
+
+    transform:
+        translate(-50%,20px);
+
+    padding: 10px 17px;
+
+    background: #111;
+
+    color: white;
+
+    border-radius: 5px;
+
+    font-size: 12px;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        .25s ease;
+
+    z-index: 100001;
+}
+
+.toast.show {
+
+    opacity: 1;
+
+    transform:
+        translate(-50%,0);
+}
+
+
+/* =========================================================
+   跳转高亮
+========================================================= */
+
+.case-card.flash {
+
+    animation:
+        flashCard 1.1s ease;
+}
+
+@keyframes flashCard {
+
+    0% {
+
+        box-shadow:
+            0 0 0 4px #111;
+
+    }
+
+    100% {
+
+        box-shadow:
+            0 5px 16px rgba(0,0,0,.05);
+
+    }
+}
+
+
+/* =========================================================
+   底部
+========================================================= */
+
+.footer {
+
+    padding: 30px;
+
+    text-align: center;
+
+    color: #999;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   大屏
+========================================================= */
+
+@media (min-width: 1700px) {
+
+    .case-card {
+
+        min-height: 235px;
+    }
+
+    .dropdown-grid {
+
+        grid-template-columns:
+            repeat(5,minmax(0,1fr));
+    }
+
+}
+
+
+/* =========================================================
+   中等屏幕
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .dropdown-grid {
+
+        grid-template-columns:
+            repeat(3,minmax(0,1fr));
+    }
+
+}
+
+
+/* =========================================================
+   平板
+========================================================= */
+
+@media (max-width: 850px) {
+
+    .case-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+    .dropdown-grid {
+
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+    }
+
+}
+
+
+/* =========================================================
+   手机
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .topbar {
+
+        height: 150px;
+    }
+
+    .category-bar {
+
+        height: 107px;
+    }
+
+    .dropdown {
+
+        top: 150px;
+
+        left: 8px;
+
+        right: 8px;
+    }
+
+    .dropdown-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+    .page {
+
+        padding-top: 175px;
+
+        width: 94vw;
+    }
+
+    .hero h1 {
+
+        font-size: 22px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     顶部导航
+===================================================== -->
+
+<header class="topbar">
+
+    <div class="top-title">
+
+        <strong>
+            外贸法律纠纷案例知识库
+        </strong>
+
+        <span>
+            60类案例 · 分类导航
+        </span>
+
+    </div>
+
+
+    <nav
+        class="category-bar"
+        id="categoryBar">
+    </nav>
+
+</header>
+
+
+<!-- =====================================================
+     下拉菜单
+===================================================== -->
+
+<div
+    class="dropdown"
+    id="dropdown">
+
+    <div class="dropdown-head">
+
+        <strong id="dropdownTitle">
+            请选择案例
+        </strong>
+
+        <span id="dropdownCount">
+        </span>
+
+    </div>
+
+    <div
+        class="dropdown-grid"
+        id="dropdownGrid">
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     页面主体
+===================================================== -->
+
+<main class="page">
+
+
+    <section class="hero">
+
+        <h1>
+            外贸法律纠纷案例菜单
+        </h1>
+
+        <p>
+            国际货物买卖 · 付款结算 · 产品质量 ·
+            海关报关 · 运输物流 · 知识产权 ·
+            跨境电商 · 合规 · 仲裁 · 诉讼 · 欺诈
+        </p>
+
+        <p>
+            点击顶部大类 → 选择具体案例；
+            点击案例小类可直接复制完整案例关键词。
+        </p>
+
+    </section>
+
+
+    <section
+        class="case-grid"
+        id="caseGrid">
+    </section>
+
+
+    <div class="footer">
+
+        外贸法律纠纷知识库 · Case Menu
+
+    </div>
+
+</main>
+
+
+<!-- =====================================================
+     Tooltip
+===================================================== -->
+
+<div
+    class="tooltip"
+    id="tooltip">
+</div>
+
+
+<!-- =====================================================
+     Toast
+===================================================== -->
+
+<div
+    class="toast"
+    id="toast">
+</div>
+
+
+<script>
+
+/* =========================================================
+   01. 案例数据
+========================================================= */
+
+const cases = [
+
+{
+id:1,
+title:"国际货物买卖合同纠纷",
+directions:["违约","解除合同","赔偿","履约争议"]
+},
+
+{
+id:2,
+title:"货款与付款纠纷",
+directions:["拖欠货款","拒付","信用证","托收","电汇"]
+},
+
+{
+id:3,
+title:"产品质量与索赔纠纷",
+directions:["质量不符","规格不符","性能不达标","索赔"]
+},
+
+{
+id:4,
+title:"国际贸易欺诈纠纷",
+directions:["虚假订单","身份欺诈","付款欺诈","单据欺诈"]
+},
+
+{
+id:5,
+title:"外贸合同条款纠纷",
+directions:["FOB","CIF","DDP等贸易术语","风险转移","责任划分"]
+},
+
+{
+id:6,
+title:"运输与物流纠纷",
+directions:["货损","货差","延误","承运人责任","运输合同"]
+},
+
+{
+id:7,
+title:"海运与船务纠纷",
+directions:["提单","无单放货","滞箱费","滞期费","船期争议"]
+},
+
+{
+id:8,
+title:"国际货运代理纠纷",
+directions:["货代失误","订舱","改单","费用","责任认定"]
+},
+
+{
+id:9,
+title:"报关与海关纠纷",
+directions:["申报错误","归类错误","价格申报","查验","处罚"]
+},
+
+{
+id:10,
+title:"关税与税务纠纷",
+directions:["关税争议","增值税","出口退税","税收责任"]
+},
+
+{
+id:11,
+title:"原产地与贸易合规纠纷",
+directions:["原产地证明","转口贸易","规避关税","虚假产地"]
+},
+
+{
+id:12,
+title:"进出口许可证纠纷",
+directions:["许可证","配额","监管证件","特殊商品准入"]
+},
+
+{
+id:13,
+title:"制裁与出口管制纠纷",
+directions:["经济制裁","出口管制","禁运","受限国家/地区"]
+},
+
+{
+id:14,
+title:"反倾销与贸易救济纠纷",
+directions:["反倾销税","反补贴","保障措施","调查应诉"]
+},
+
+{
+id:15,
+title:"信用证纠纷",
+directions:["不符点","拒付","单证不符","银行责任"]
+},
+
+{
+id:16,
+title:"国际结算与银行纠纷",
+directions:["托收","电汇","付款指令","冻结","退汇"]
+},
+
+{
+id:17,
+title:"国际保险纠纷",
+directions:["货运险","货损理赔","保险责任","拒赔"]
+},
+
+{
+id:18,
+title:"知识产权纠纷",
+directions:["商标","专利","版权","外观设计","侵权"]
+},
+
+{
+id:19,
+title:"商标与品牌纠纷",
+directions:["抢注商标","品牌侵权","仿牌","授权争议"]
+},
+
+{
+id:20,
+title:"专利与技术纠纷",
+directions:["专利侵权","技术授权","技术秘密"]
+},
+
+{
+id:21,
+title:"商业秘密纠纷",
+directions:["客户名单","供应链信息","技术资料泄露"]
+},
+
+{
+id:22,
+title:"跨境电商法律纠纷",
+directions:["平台规则","账号封禁","交易纠纷","消费者索赔"]
+},
+
+{
+id:23,
+title:"平台交易纠纷",
+directions:["Amazon","eBay","Alibaba","平台交易争议","平台规则争议"]
+},
+
+{
+id:24,
+title:"跨境消费者纠纷",
+directions:["退货","退款","产品责任","消费者保护"]
+},
+
+{
+id:25,
+title:"产品责任纠纷",
+directions:["产品致人损害","召回","责任保险","赔偿"]
+},
+
+{
+id:26,
+title:"合规与认证纠纷",
+directions:["CE","FCC","RoHS","REACH","认证与合规问题"]
+},
+
+{
+id:27,
+title:"包装与标签纠纷",
+directions:["标签错误","警示语","包装法规","原产地标识"]
+},
+
+{
+id:28,
+title:"经销商与代理商纠纷",
+directions:["独家代理","区域代理","渠道冲突","佣金"]
+},
+
+{
+id:29,
+title:"外贸佣金纠纷",
+directions:["中间商佣金","业务员提成","尾佣","佣金拖欠"]
+},
+
+{
+id:30,
+title:"国际代理合同纠纷",
+directions:["代理权限","代理终止","客户归属","赔偿"]
+},
+
+{
+id:31,
+title:"经销合同纠纷",
+directions:["最低采购量","价格体系","区域保护","窜货"]
+},
+
+{
+id:32,
+title:"独家代理权纠纷",
+directions:["独家权","抢客户","跨区域销售","代理冲突"]
+},
+
+{
+id:33,
+title:"外贸居间与中间商纠纷",
+directions:["居间费","介绍费","客户归属","跳单"]
+},
+
+{
+id:34,
+title:"国际合资与合作纠纷",
+directions:["合资经营","利润分配","股权","退出"]
+},
+
+{
+id:35,
+title:"跨境投资纠纷",
+directions:["海外投资","股权","投资退出","资产争议"]
+},
+
+{
+id:36,
+title:"加工贸易纠纷",
+directions:["来料加工","进料加工","保税料件","合同履行"]
+},
+
+{
+id:37,
+title:"OEM/ODM纠纷",
+directions:["代工质量","模具","设计","知识产权","订单取消"]
+},
+
+{
+id:38,
+title:"定制产品纠纷",
+directions:["定制规格","打样","验收","修改","拒收"]
+},
+
+{
+id:39,
+title:"模具与生产资料纠纷",
+directions:["模具所有权","保管","返还","损坏"]
+},
+
+{
+id:40,
+title:"供应商合同纠纷",
+directions:["交期","质量","价格","原材料","违约"]
+},
+
+{
+id:41,
+title:"外贸采购纠纷",
+directions:["采购合同","验货","拒收","采购代理"]
+},
+
+{
+id:42,
+title:"国际招投标纠纷",
+directions:["投标资格","串标","废标","中标争议"]
+},
+
+{
+id:43,
+title:"国际工程与项目贸易纠纷",
+directions:["EPC","工程设备","项目延期","工程款"]
+},
+
+{
+id:44,
+title:"技术服务与售后纠纷",
+directions:["安装","调试","维修","培训","售后责任"]
+},
+
+{
+id:45,
+title:"售后服务责任纠纷",
+directions:["保修期","维修费用","配件","人工成本"]
+},
+
+{
+id:46,
+title:"数据与跨境数据合规纠纷",
+directions:["客户数据","隐私","数据跨境传输"]
+},
+
+{
+id:47,
+title:"个人信息与隐私纠纷",
+directions:["GDPR","数据泄露","客户信息滥用"]
+},
+
+{
+id:48,
+title:"跨境广告与营销纠纷",
+directions:["虚假宣传","广告合规","营销侵权"]
+},
+
+{
+id:49,
+title:"反商业贿赂纠纷",
+directions:["回扣","商业贿赂","代理商违规"]
+},
+
+{
+id:50,
+title:"洗钱与资金合规纠纷",
+directions:["可疑交易","账户冻结","资金来源调查"]
+},
+
+{
+id:51,
+title:"外汇与跨境资金纠纷",
+directions:["外汇管制","收付款限制","资金冻结"]
+},
+
+{
+id:52,
+title:"国际仲裁纠纷",
+directions:["仲裁条款","仲裁地","仲裁裁决","执行"]
+},
+
+{
+id:53,
+title:"国际诉讼纠纷",
+directions:["管辖权","跨国起诉","判决承认与执行"]
+},
+
+{
+id:54,
+title:"跨境债务追偿纠纷",
+directions:["海外客户欠款","资产追索","债务执行"]
+},
+
+{
+id:55,
+title:"国际合同诈骗与刑事风险",
+directions:["假合同","假公司","骗货","骗款"]
+},
+
+{
+id:56,
+title:"海关行政处罚纠纷",
+directions:["行政处罚","复议","行政诉讼"]
+},
+
+{
+id:57,
+title:"货物扣押与没收纠纷",
+directions:["海关扣货","法院扣押","监管扣押"]
+},
+
+{
+id:58,
+title:"进出口禁限商品纠纷",
+directions:["禁运品","管制品","特殊商品违规"]
+},
+
+{
+id:59,
+title:"国际贸易单据纠纷",
+directions:["发票","装箱单","提单","原产地证","检验证书"]
+},
+
+{
+id:60,
+title:"跨境合同诈骗识别与追责",
+directions:["冒充客户","假网站","假邮箱","第三方付款","骗货"]
+}
+
+];
+
+
+/* =========================================================
+   02. 顶部大类
+========================================================= */
+
+const groups = [
+
+{
+title:"合同与交易",
+ids:[1,2,3,4,5]
+},
+
+{
+title:"运输与物流",
+ids:[6,7,8]
+},
+
+{
+title:"海关与税务",
+ids:[9,10,11,12]
+},
+
+{
+title:"贸易管制",
+ids:[13,14]
+},
+
+{
+title:"结算与保险",
+ids:[15,16,17]
+},
+
+{
+title:"知识产权",
+ids:[18,19,20,21]
+},
+
+{
+title:"跨境电商",
+ids:[22,23,24]
+},
+
+{
+title:"产品与合规",
+ids:[25,26,27]
+},
+
+{
+title:"代理与经销",
+ids:[28,29,30,31,32,33]
+},
+
+{
+title:"投资与合作",
+ids:[34,35]
+},
+
+{
+title:"生产与采购",
+ids:[36,37,38,39,40,41]
+},
+
+{
+title:"工程与服务",
+ids:[42,43,44,45]
+},
+
+{
+title:"数据与营销",
+ids:[46,47,48]
+},
+
+{
+title:"商业合规",
+ids:[49,50,51]
+},
+
+{
+title:"争议与追责",
+ids:[52,53,54,55,56,57,58,59,60]
+}
+
+];
+
+
+/* =========================================================
+   03. 获取元素
+========================================================= */
+
+const categoryBar =
+    document.getElementById("categoryBar");
+
+const dropdown =
+    document.getElementById("dropdown");
+
+const dropdownTitle =
+    document.getElementById("dropdownTitle");
+
+const dropdownCount =
+    document.getElementById("dropdownCount");
+
+const dropdownGrid =
+    document.getElementById("dropdownGrid");
+
+const caseGrid =
+    document.getElementById("caseGrid");
+
+const tooltip =
+    document.getElementById("tooltip");
+
+const toast =
+    document.getElementById("toast");
+
+
+/* =========================================================
+   04. 创建案例卡片
+========================================================= */
+
+cases.forEach(item => {
+
+    const card =
+        document.createElement("article");
+
+    card.className =
+        "case-card";
+
+    card.id =
+        "case-" + item.id;
+
+
+    const no =
+        document.createElement("div");
+
+    no.className =
+        "case-no";
+
+    no.textContent =
+        String(item.id).padStart(2,"0");
+
+
+    const title =
+        document.createElement("div");
+
+    title.className =
+        "case-title";
+
+    title.textContent =
+        item.title;
+
+
+    title.addEventListener(
+        "click",
+        async () => {
+
+            const text =
+                item.title + "案例";
+
+            await copyText(text);
+
+            showToast(
+                "已复制：" + text
+            );
+
+        }
+    );
+
+
+    addTooltip(
+        title,
+        item.title + "案例"
+    );
+
+
+    const label =
+        document.createElement("div");
+
+    label.className =
+        "case-label";
+
+    label.textContent =
+        "典型纠纷方向";
+
+
+    const directions =
+        document.createElement("div");
+
+    directions.className =
+        "case-directions";
+
+
+    item.directions.forEach(
+        direction => {
+
+            const button =
+                document.createElement("div");
+
+            button.className =
+                "direction";
+
+            button.textContent =
+                direction;
+
+
+            const fullText =
+                `${item.title}的${direction}案例`;
+
+
+            button.addEventListener(
+                "click",
+                async event => {
+
+                    event.stopPropagation();
+
+                    await copyText(
+                        fullText
+                    );
+
+                    button.classList.add(
+                        "copied"
+                    );
+
+                    showToast(
+                        "已复制：" + fullText
+                    );
+
+
+                    setTimeout(
+                        () => {
+
+                            button.classList.remove(
+                                "copied"
+                            );
+
+                        },
+                        700
+                    );
+
+                }
+            );
+
+
+            addTooltip(
+                button,
+                fullText
+            );
+
+
+            directions.appendChild(
+                button
+            );
+
+        }
+    );
+
+
+    card.appendChild(no);
+
+    card.appendChild(title);
+
+    card.appendChild(label);
+
+    card.appendChild(directions);
+
+    caseGrid.appendChild(card);
+
+});
+
+
+/* =========================================================
+   05. 创建顶部大类导航
+========================================================= */
+
+groups.forEach(
+    (group,index) => {
+
+        const button =
+            document.createElement("div");
+
+        button.className =
+            "category";
+
+        button.textContent =
+            group.title;
+
+        button.dataset.index =
+            index;
+
+
+        button.addEventListener(
+            "click",
+            event => {
+
+                event.stopPropagation();
+
+                openGroup(
+                    group,
+                    button
+                );
+
+            }
+        );
+
+
+        categoryBar.appendChild(
+            button
+        );
+
+    }
+);
+
+
+/* =========================================================
+   06. 打开大类
+========================================================= */
+
+function openGroup(group,button) {
+
+    const alreadyOpen =
+        dropdown.classList.contains("show") &&
+        dropdown.dataset.index ===
+        button.dataset.index;
+
+
+    document
+        .querySelectorAll(".category")
+        .forEach(
+            item => {
+
+                item.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    if (alreadyOpen) {
+
+        closeDropdown();
+
+        return;
+
+    }
+
+
+    button.classList.add(
+        "active"
+    );
+
+
+    dropdown.dataset.index =
+        button.dataset.index;
+
+
+    dropdownTitle.textContent =
+        group.title;
+
+
+    dropdownCount.textContent =
+        group.ids.length +
+        " 个案例类型";
+
+
+    dropdownGrid.innerHTML =
+        "";
+
+
+    group.ids.forEach(
+        id => {
+
+            const item =
+                cases.find(
+                    c => c.id === id
+                );
+
+            if (!item)
+                return;
+
+
+            const box =
+                document.createElement("div");
+
+            box.className =
+                "dropdown-case";
+
+
+            const title =
+                document.createElement("div");
+
+            title.className =
+                "dropdown-case-title";
+
+            title.textContent =
+                `${String(item.id).padStart(2,"0")} · ${item.title}`;
+
+
+            /*
+             * 点击案例标题
+             */
+
+            title.addEventListener(
+                "click",
+                event => {
+
+                    event.stopPropagation();
+
+                    closeDropdown();
+
+                    jumpToCase(
+                        item.id
+                    );
+
+                }
+            );
+
+
+            const small =
+                document.createElement("div");
+
+            small.className =
+                "dropdown-small";
+
+
+            item.directions.forEach(
+                direction => {
+
+                    const span =
+                        document.createElement("span");
+
+                    span.textContent =
+                        direction;
+
+
+                    const fullText =
+                        `${item.title}的${direction}案例`;
+
+
+                    /*
+                     * 点击小类
+                     */
+
+                    span.addEventListener(
+                        "click",
+                        async event => {
+
+                            event.stopPropagation();
+
+
+                            await copyText(
+                                fullText
+                            );
+
+
+                            showToast(
+                                "已复制：" +
+                                fullText
+                            );
+
+
+                            closeDropdown();
+
+
+                            jumpToCase(
+                                item.id
+                            );
+
+                        }
+                    );
+
+
+                    addTooltip(
+                        span,
+                        fullText
+                    );
+
+
+                    small.appendChild(
+                        span
+                    );
+
+                }
+            );
+
+
+            box.appendChild(
+                title
+            );
+
+            box.appendChild(
+                small
+            );
+
+
+            dropdownGrid.appendChild(
+                box
+            );
+
+        }
+    );
+
+
+    dropdown.classList.add(
+        "show"
+    );
+
+}
+
+
+/* =========================================================
+   07. 关闭下拉
+========================================================= */
+
+function closeDropdown() {
+
+    dropdown.classList.remove(
+        "show"
+    );
+
+
+    document
+        .querySelectorAll(".category")
+        .forEach(
+            item => {
+
+                item.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   08. 页面其他地方点击
+========================================================= */
+
+document.addEventListener(
+    "click",
+    event => {
+
+        if (
+            !event.target.closest(".dropdown") &&
+            !event.target.closest(".category")
+        ) {
+
+            closeDropdown();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   09. 跳转案例
+========================================================= */
+
+function jumpToCase(id) {
+
+    const target =
+        document.getElementById(
+            "case-" + id
+        );
+
+
+    if (!target)
+        return;
+
+
+    target.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
+
+
+    setTimeout(
+        () => {
+
+            target.classList.remove(
+                "flash"
+            );
+
+            void target.offsetWidth;
+
+            target.classList.add(
+                "flash"
+            );
+
+        },
+        450
+    );
+
+}
+
+
+/* =========================================================
+   10. Tooltip
+========================================================= */
+
+function addTooltip(element,text) {
+
+    element.addEventListener(
+        "mouseenter",
+        event => {
+
+            tooltip.textContent =
+                text;
+
+            tooltip.style.display =
+                "block";
+
+            moveTooltip(event);
+
+        }
+    );
+
+
+    element.addEventListener(
+        "mousemove",
+        event => {
+
+            moveTooltip(event);
+
+        }
+    );
+
+
+    element.addEventListener(
+        "mouseleave",
+        () => {
+
+            tooltip.style.display =
+                "none";
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   11. Tooltip跟随鼠标
+========================================================= */
+
+function moveTooltip(event) {
+
+    const gap = 15;
+
+    let x =
+        event.clientX + gap;
+
+    let y =
+        event.clientY + gap;
+
+
+    const rect =
+        tooltip.getBoundingClientRect();
+
+
+    if (
+        x + rect.width >
+        window.innerWidth - 10
+    ) {
+
+        x =
+            event.clientX -
+            rect.width -
+            gap;
+
+    }
+
+
+    if (
+        y + rect.height >
+        window.innerHeight - 10
+    ) {
+
+        y =
+            event.clientY -
+            rect.height -
+            gap;
+
+    }
+
+
+    if (x < 10)
+        x = 10;
+
+    if (y < 10)
+        y = 10;
+
+
+    tooltip.style.left =
+        x + "px";
+
+    tooltip.style.top =
+        y + "px";
+
+}
+
+
+/* =========================================================
+   12. 复制
+========================================================= */
+
+async function copyText(text) {
+
+    try {
+
+        if (
+            navigator.clipboard &&
+            window.isSecureContext
+        ) {
+
+            await navigator.clipboard.writeText(
+                text
+            );
+
+        }
+
+        else {
+
+            const textarea =
+                document.createElement(
+                    "textarea"
+                );
+
+            textarea.value =
+                text;
+
+            textarea.style.position =
+                "fixed";
+
+            textarea.style.left =
+                "-9999px";
+
+            document.body.appendChild(
+                textarea
+            );
+
+            textarea.focus();
+
+            textarea.select();
+
+            document.execCommand(
+                "copy"
+            );
+
+            textarea.remove();
+
+        }
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "复制失败",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   13. Toast
+========================================================= */
+
+let toastTimer =
+    null;
+
+
+function showToast(text) {
+
+    toast.textContent =
+        text;
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            () => {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            1800
+        );
+
+}
+
+
+/* =========================================================
+   14. ESC关闭
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeDropdown();
+
+            tooltip.style.display =
+                "none";
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
